@@ -1,13 +1,12 @@
-import { motion } from 'framer-motion';
-import { useInView } from 'framer-motion';
+import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
 import { Code2, Bot, Cpu, Lightbulb } from 'lucide-react';
 
 const icons = [
-  { Icon: Code2, label: 'Programming', color: 'text-neon-blue' },
-  { Icon: Bot, label: 'Automation', color: 'text-neon-purple' },
-  { Icon: Cpu, label: 'System Architecture', color: 'text-neon-cyan' },
-  { Icon: Lightbulb, label: 'Problem Solving', color: 'text-neon-pink' },
+  { Icon: Code2, label: 'Programming', colorClass: 'text-primary', glowHsl: '217,91%,60%' },
+  { Icon: Bot, label: 'Automation', colorClass: 'text-secondary', glowHsl: '270,70%,60%' },
+  { Icon: Cpu, label: 'System Architecture', colorClass: 'text-accent', glowHsl: '186,90%,50%' },
+  { Icon: Lightbulb, label: 'Problem Solving', colorClass: 'text-neon-pink', glowHsl: '330,90%,60%' },
 ];
 
 const AboutSection = () => {
@@ -28,8 +27,8 @@ const AboutSection = () => {
         </motion.div>
 
         <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
+          initial={{ opacity: 0, y: 50, scale: 0.95 }}
+          animate={inView ? { opacity: 1, y: 0, scale: 1 } : {}}
           transition={{ duration: 0.6, delay: 0.2 }}
           className="bg-gradient-card rounded-2xl p-8 md:p-12 border border-border shimmer relative overflow-hidden"
         >
@@ -41,16 +40,24 @@ const AboutSection = () => {
           </p>
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-            {icons.map(({ Icon, label, color }, i) => (
+            {icons.map(({ Icon, label, colorClass, glowHsl }, i) => (
               <motion.div
                 key={label}
-                initial={{ opacity: 0, y: 30 }}
-                animate={inView ? { opacity: 1, y: 0 } : {}}
-                transition={{ delay: 0.3 + i * 0.1 }}
-                whileHover={{ scale: 1.05, y: -5 }}
-                className="flex flex-col items-center gap-3 p-6 rounded-xl bg-muted/30 border border-border/50 hover:border-neon-blue/30 transition-colors"
+                initial={{ opacity: 0, y: 30, scale: 0.8 }}
+                animate={inView ? { opacity: 1, y: 0, scale: 1 } : {}}
+                transition={{ delay: 0.3 + i * 0.1, type: 'spring' }}
+                whileHover={{ scale: 1.1, y: -8 }}
+                className="flex flex-col items-center gap-3 p-6 rounded-xl bg-muted/30 border border-border/50 hover:border-primary/30 transition-all group"
+                style={{ cursor: 'default' }}
               >
-                <Icon className={`${color} w-8 h-8`} />
+                <motion.div whileHover={{ rotate: [0, -10, 10, 0] }} transition={{ duration: 0.5 }}>
+                  <Icon
+                    className={`${colorClass} w-8 h-8 transition-all group-hover:drop-shadow-lg`}
+                    style={{ filter: 'drop-shadow(0 0 0px transparent)' }}
+                    onMouseEnter={(e) => { (e.target as HTMLElement).style.filter = `drop-shadow(0 0 8px hsl(${glowHsl}))`; }}
+                    onMouseLeave={(e) => { (e.target as HTMLElement).style.filter = 'drop-shadow(0 0 0px transparent)'; }}
+                  />
+                </motion.div>
                 <span className="text-sm text-muted-foreground font-body text-center">{label}</span>
               </motion.div>
             ))}

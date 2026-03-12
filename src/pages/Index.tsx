@@ -10,6 +10,7 @@ import AchievementsSection from '@/components/AchievementsSection';
 import EducationSection from '@/components/EducationSection';
 import ContactSection from '@/components/ContactSection';
 import Footer from '@/components/Footer';
+import SectionSeparator from '@/components/SectionSeparator';
 
 const Index = () => {
   return (
@@ -19,12 +20,19 @@ const Index = () => {
       <Navbar />
       <main className="relative z-10">
         <HeroSection />
+        <SectionSeparator />
         <AboutSection />
+        <SectionSeparator />
         <SkillsSection />
+        <SectionSeparator />
         <ProjectsSection />
+        <SectionSeparator />
         <ExperienceSection />
+        <SectionSeparator />
         <AchievementsSection />
+        <SectionSeparator />
         <EducationSection />
+        <SectionSeparator />
         <ContactSection />
         <Footer />
       </main>

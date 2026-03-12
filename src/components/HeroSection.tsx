@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { ArrowDown, ExternalLink, Mail } from 'lucide-react';
+import { ArrowDown, ExternalLink, Mail, Download } from 'lucide-react';
 import profileAvatar from '@/assets/profile-avatar.png';
 
 const phrases = [
@@ -47,7 +47,7 @@ const HeroSection = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
-            className="text-neon-cyan font-body text-sm tracking-widest uppercase mb-4"
+            className="text-accent font-body text-sm tracking-widest uppercase mb-4"
           >
             Welcome to my portfolio
           </motion.p>
@@ -59,17 +59,34 @@ const HeroSection = () => {
             className="text-5xl md:text-7xl font-heading font-bold mb-4 leading-tight"
           >
             Hi, I'm{' '}
-            <span className="text-gradient">Mohd Saad Khan</span>
+            <span className="text-gradient-name name-shimmer animate-breathe inline-block">
+              Mohd Saad Khan
+            </span>
           </motion.h1>
 
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.5 }}
-            className="text-xl md:text-2xl font-heading text-muted-foreground mb-6 h-8"
+            className="text-xl md:text-2xl font-heading mb-6 h-8"
           >
-            <span>{text}</span>
-            <span className="animate-pulse text-neon-blue">|</span>
+            <span
+              className="bg-clip-text text-transparent"
+              style={{
+                backgroundImage: 'linear-gradient(90deg, hsl(186,90%,50%), hsl(270,70%,60%))',
+                filter: 'drop-shadow(0 0 8px hsla(186,90%,50%,0.4))',
+              }}
+            >
+              {text}
+            </span>
+            <span
+              className="inline-block w-0.5 h-6 ml-1 align-middle"
+              style={{
+                background: 'hsl(186,90%,50%)',
+                boxShadow: '0 0 8px hsl(186,90%,50%)',
+                animation: 'blink 1s step-end infinite',
+              }}
+            />
           </motion.div>
 
           <motion.p
@@ -90,7 +107,7 @@ const HeroSection = () => {
           >
             <a
               href="#projects"
-              className="group relative px-6 py-3 rounded-lg font-heading font-semibold text-sm bg-gradient-primary text-primary-foreground overflow-hidden transition-transform hover:-translate-y-1 glow-blue"
+              className="ripple-container group relative px-6 py-3 rounded-lg font-heading font-semibold text-sm bg-gradient-primary text-primary-foreground overflow-hidden transition-transform hover:-translate-y-1 glow-blue"
             >
               <span className="relative z-10 flex items-center gap-2">
                 View Projects <ExternalLink size={16} />
@@ -98,10 +115,18 @@ const HeroSection = () => {
             </a>
             <a
               href="#contact"
-              className="group relative px-6 py-3 rounded-lg font-heading font-semibold text-sm border border-neon-blue/30 text-foreground hover:border-neon-blue/60 transition-all hover:-translate-y-1"
+              className="ripple-container group relative px-6 py-3 rounded-lg font-heading font-semibold text-sm border border-primary/30 text-foreground hover:border-primary/60 transition-all hover:-translate-y-1 hover:glow-purple"
             >
               <span className="flex items-center gap-2">
                 Contact Me <Mail size={16} />
+              </span>
+            </a>
+            <a
+              href="#"
+              className="ripple-container group relative px-6 py-3 rounded-lg font-heading font-semibold text-sm border border-accent/30 text-foreground hover:border-accent/60 transition-all hover:-translate-y-1 hover:glow-cyan"
+            >
+              <span className="flex items-center gap-2">
+                Download Resume <Download size={16} />
               </span>
             </a>
           </motion.div>
@@ -118,7 +143,7 @@ const HeroSection = () => {
             {/* Animated ring */}
             <div className="absolute inset-0 rounded-full animate-spin-slow"
               style={{
-                background: 'conic-gradient(from 0deg, hsl(217,91%,60%), hsl(270,70%,60%), hsl(186,90%,50%), hsl(330,90%,60%), hsl(217,91%,60%))',
+                background: 'conic-gradient(from 0deg, hsl(217,91%,60%), hsl(270,70%,60%), hsl(186,90%,50%), hsl(330,90%,60%), hsl(25,95%,60%), hsl(217,91%,60%))',
                 padding: '3px',
                 borderRadius: '50%',
                 width: 'calc(100% + 16px)',
@@ -136,22 +161,24 @@ const HeroSection = () => {
               />
             </div>
             {/* Floating particles */}
-            {[...Array(6)].map((_, i) => (
+            {[...Array(8)].map((_, i) => (
               <motion.div
                 key={i}
                 className="absolute w-2 h-2 rounded-full"
                 style={{
-                  background: ['#4F8EF7', '#8B5CF6', '#06B6D4', '#EC4899', '#4F8EF7', '#8B5CF6'][i],
-                  top: `${20 + Math.sin(i * 1.2) * 40}%`,
-                  left: `${20 + Math.cos(i * 1.2) * 40}%`,
+                  background: ['#4F8EF7', '#8B5CF6', '#06B6D4', '#EC4899', '#F97316', '#4F8EF7', '#8B5CF6', '#06B6D4'][i],
+                  top: `${15 + Math.sin(i * 0.9) * 40}%`,
+                  left: `${15 + Math.cos(i * 0.9) * 45}%`,
+                  boxShadow: `0 0 8px ${['#4F8EF7', '#8B5CF6', '#06B6D4', '#EC4899', '#F97316', '#4F8EF7', '#8B5CF6', '#06B6D4'][i]}`,
                 }}
                 animate={{
-                  y: [0, -20, 0],
-                  x: [0, 10, 0],
-                  opacity: [0.3, 0.8, 0.3],
+                  y: [0, -25, 0],
+                  x: [0, 12, 0],
+                  opacity: [0.3, 0.9, 0.3],
+                  scale: [1, 1.3, 1],
                 }}
                 transition={{
-                  duration: 3 + i * 0.5,
+                  duration: 3 + i * 0.4,
                   repeat: Infinity,
                   ease: 'easeInOut',
                 }}
@@ -169,6 +196,13 @@ const HeroSection = () => {
       >
         <ArrowDown className="text-muted-foreground" size={24} />
       </motion.div>
+
+      <style>{`
+        @keyframes blink {
+          0%, 100% { opacity: 1; }
+          50% { opacity: 0; }
+        }
+      `}</style>
     </section>
   );
 };

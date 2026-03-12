@@ -5,35 +5,55 @@ const categories = [
   {
     title: 'Programming Languages',
     skills: ['C', 'C++', 'Python', 'Java', 'HTML', 'CSS', 'JavaScript', 'SQL'],
-    color: 'from-neon-blue to-neon-cyan',
+    gradient: 'from-primary to-accent',
+    glowColor: 'hsl(217,91%,60%)',
   },
   {
     title: 'CS Knowledge',
     skills: ['Data Structures', 'DBMS', 'OOP', 'Computer Graphics', 'Digital Techniques', 'Operating Systems', 'Computer Networking'],
-    color: 'from-neon-purple to-neon-pink',
+    gradient: 'from-secondary to-neon-pink',
+    glowColor: 'hsl(270,70%,60%)',
   },
   {
     title: 'Tools & Platforms',
     skills: ['GitHub', 'VS Code', 'Turbo C++', 'OBS Studio', 'Canva', 'Aternos', 'PaperMC'],
-    color: 'from-neon-cyan to-neon-blue',
+    gradient: 'from-accent to-primary',
+    glowColor: 'hsl(186,90%,50%)',
   },
 ];
 
-const SkillCard = ({ skill, index, inView }: { skill: string; index: number; inView: boolean }) => {
+const SkillCard = ({ skill, index, inView, glowColor }: { skill: string; index: number; inView: boolean; glowColor: string }) => {
   const [hovered, setHovered] = useState(false);
+  const [tilt, setTilt] = useState({ x: 0, y: 0 });
+  const cardRef = useRef<HTMLDivElement>(null);
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!cardRef.current) return;
+    const rect = cardRef.current.getBoundingClientRect();
+    const x = ((e.clientX - rect.left) / rect.width - 0.5) * 15;
+    const y = ((e.clientY - rect.top) / rect.height - 0.5) * -15;
+    setTilt({ x: y, y: x });
+  };
+
+  const handleMouseLeave = () => {
+    setHovered(false);
+    setTilt({ x: 0, y: 0 });
+  };
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20, scale: 0.9 }}
+      ref={cardRef}
+      initial={{ opacity: 0, y: 30, scale: 0.85 }}
       animate={inView ? { opacity: 1, y: 0, scale: 1 } : {}}
       transition={{ delay: index * 0.05, type: 'spring', stiffness: 200 }}
-      whileHover={{ scale: 1.08, y: -5, rotateX: 5, rotateY: 5 }}
-      onHoverStart={() => setHovered(true)}
-      onHoverEnd={() => setHovered(false)}
-      className="relative px-4 py-3 rounded-xl bg-muted/40 border border-border/50 text-center font-body text-sm text-foreground transition-all cursor-default overflow-hidden"
+      onMouseEnter={() => setHovered(true)}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      className="relative px-4 py-3 rounded-xl bg-muted/40 border border-border/50 text-center font-body text-sm text-foreground cursor-default overflow-hidden shimmer"
       style={{
-        boxShadow: hovered ? '0 0 25px hsla(217,91%,60%,0.3), 0 10px 30px hsla(0,0%,0%,0.3)' : 'none',
-        perspective: '500px',
+        transform: `perspective(500px) rotateX(${tilt.x}deg) rotateY(${tilt.y}deg) ${hovered ? 'translateY(-4px) scale(1.06)' : ''}`,
+        boxShadow: hovered ? `0 0 25px ${glowColor}40, 0 10px 30px hsla(0,0%,0%,0.3)` : 'none',
+        transition: 'transform 0.2s ease, box-shadow 0.3s ease',
       }}
     >
       <span className="relative z-10">{skill}</span>
@@ -72,12 +92,12 @@ const SkillsSection = () => {
               animate={inView ? { opacity: 1, x: 0 } : {}}
               transition={{ delay: catIndex * 0.2 }}
             >
-              <h3 className={`text-xl font-heading font-semibold mb-6 bg-gradient-to-r ${cat.color} bg-clip-text text-transparent`}>
+              <h3 className={`text-xl font-heading font-semibold mb-6 bg-gradient-to-r ${cat.gradient} bg-clip-text text-transparent`}>
                 {cat.title}
               </h3>
               <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
                 {cat.skills.map((skill, i) => (
-                  <SkillCard key={skill} skill={skill} index={i + catIndex * 8} inView={inView} />
+                  <SkillCard key={skill} skill={skill} index={i + catIndex * 8} inView={inView} glowColor={cat.glowColor} />
                 ))}
               </div>
             </motion.div>

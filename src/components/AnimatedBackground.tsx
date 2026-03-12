@@ -13,17 +13,34 @@ const AnimatedBackground = () => {
     let h = canvas.height = window.innerHeight;
     let mouse = { x: w / 2, y: h / 2 };
 
-    const particles: { x: number; y: number; vx: number; vy: number; size: number; color: string; alpha: number }[] = [];
+    const particles: { x: number; y: number; vx: number; vy: number; size: number; color: string; alpha: number; baseAlpha: number }[] = [];
+    const largeParticles: { x: number; y: number; vx: number; vy: number; size: number; alpha: number; hue: number }[] = [];
 
-    for (let i = 0; i < 80; i++) {
+    // Small particles
+    for (let i = 0; i < 100; i++) {
+      const alpha = Math.random() * 0.5 + 0.1;
       particles.push({
         x: Math.random() * w,
         y: Math.random() * h,
-        vx: (Math.random() - 0.5) * 0.5,
-        vy: (Math.random() - 0.5) * 0.5,
-        size: Math.random() * 2 + 0.5,
-        color: ['#4F8EF7', '#8B5CF6', '#06B6D4', '#EC4899'][Math.floor(Math.random() * 4)],
-        alpha: Math.random() * 0.5 + 0.1,
+        vx: (Math.random() - 0.5) * 0.6,
+        vy: (Math.random() - 0.5) * 0.6,
+        size: Math.random() * 2.5 + 0.5,
+        color: ['#4F8EF7', '#8B5CF6', '#06B6D4', '#EC4899', '#F97316'][Math.floor(Math.random() * 5)],
+        alpha,
+        baseAlpha: alpha,
+      });
+    }
+
+    // Larger glowing particles
+    for (let i = 0; i < 8; i++) {
+      largeParticles.push({
+        x: Math.random() * w,
+        y: Math.random() * h,
+        vx: (Math.random() - 0.5) * 0.2,
+        vy: (Math.random() - 0.5) * 0.2,
+        size: Math.random() * 40 + 20,
+        alpha: Math.random() * 0.04 + 0.02,
+        hue: [217, 270, 186, 330][Math.floor(Math.random() * 4)],
       });
     }
 
@@ -39,10 +56,31 @@ const AnimatedBackground = () => {
     window.addEventListener('resize', handleResize);
     window.addEventListener('mousemove', handleMouse);
 
+    let time = 0;
     let frame: number;
     const animate = () => {
       ctx.clearRect(0, 0, w, h);
+      time += 0.01;
 
+      // Large glowing orbs
+      for (const lp of largeParticles) {
+        lp.x += lp.vx;
+        lp.y += lp.vy;
+        if (lp.x < -50) lp.x = w + 50;
+        if (lp.x > w + 50) lp.x = -50;
+        if (lp.y < -50) lp.y = h + 50;
+        if (lp.y > h + 50) lp.y = -50;
+
+        const grad = ctx.createRadialGradient(lp.x, lp.y, 0, lp.x, lp.y, lp.size);
+        grad.addColorStop(0, `hsla(${lp.hue},80%,60%,${lp.alpha})`);
+        grad.addColorStop(1, 'transparent');
+        ctx.beginPath();
+        ctx.arc(lp.x, lp.y, lp.size, 0, Math.PI * 2);
+        ctx.fillStyle = grad;
+        ctx.fill();
+      }
+
+      // Small particles
       particles.forEach((p) => {
         p.x += p.vx;
         p.y += p.vy;
@@ -51,10 +89,17 @@ const AnimatedBackground = () => {
         const dx = mouse.x - p.x;
         const dy = mouse.y - p.y;
         const dist = Math.sqrt(dx * dx + dy * dy);
-        if (dist < 200) {
-          p.vx += dx * 0.00005;
-          p.vy += dy * 0.00005;
+        if (dist < 250) {
+          p.vx += dx * 0.00008;
+          p.vy += dy * 0.00008;
+          p.alpha = p.baseAlpha + (1 - dist / 250) * 0.3;
+        } else {
+          p.alpha += (p.baseAlpha - p.alpha) * 0.05;
         }
+
+        // Damping
+        p.vx *= 0.999;
+        p.vy *= 0.999;
 
         if (p.x < 0) p.x = w;
         if (p.x > w) p.x = 0;
@@ -68,17 +113,17 @@ const AnimatedBackground = () => {
         ctx.fill();
       });
 
-      // Draw connections
-      ctx.globalAlpha = 0.05;
-      ctx.strokeStyle = '#4F8EF7';
+      // Network connections
       ctx.lineWidth = 0.5;
       for (let i = 0; i < particles.length; i++) {
         for (let j = i + 1; j < particles.length; j++) {
           const dx = particles[i].x - particles[j].x;
           const dy = particles[i].y - particles[j].y;
           const dist = Math.sqrt(dx * dx + dy * dy);
-          if (dist < 150) {
-            ctx.globalAlpha = 0.05 * (1 - dist / 150);
+          if (dist < 130) {
+            const alpha = 0.08 * (1 - dist / 130);
+            ctx.globalAlpha = alpha;
+            ctx.strokeStyle = '#4F8EF7';
             ctx.beginPath();
             ctx.moveTo(particles[i].x, particles[i].y);
             ctx.lineTo(particles[j].x, particles[j].y);
@@ -86,6 +131,20 @@ const AnimatedBackground = () => {
           }
         }
       }
+
+      // Soft wave overlay
+      ctx.globalAlpha = 0.015;
+      ctx.beginPath();
+      ctx.moveTo(0, h * 0.6);
+      for (let x = 0; x <= w; x += 10) {
+        const y = h * 0.6 + Math.sin(x * 0.003 + time * 2) * 40 + Math.sin(x * 0.007 + time * 3) * 20;
+        ctx.lineTo(x, y);
+      }
+      ctx.lineTo(w, h);
+      ctx.lineTo(0, h);
+      ctx.closePath();
+      ctx.fillStyle = 'hsl(217,91%,60%)';
+      ctx.fill();
 
       ctx.globalAlpha = 1;
       frame = requestAnimationFrame(animate);
@@ -107,7 +166,7 @@ const AnimatedBackground = () => {
         <div
           className="absolute inset-0 animate-gradient"
           style={{
-            background: 'radial-gradient(ellipse at 20% 50%, hsla(270,70%,60%,0.08) 0%, transparent 50%), radial-gradient(ellipse at 80% 20%, hsla(217,91%,60%,0.08) 0%, transparent 50%), radial-gradient(ellipse at 50% 80%, hsla(186,90%,50%,0.05) 0%, transparent 50%)',
+            background: 'radial-gradient(ellipse at 20% 50%, hsla(270,70%,60%,0.1) 0%, transparent 50%), radial-gradient(ellipse at 80% 20%, hsla(217,91%,60%,0.1) 0%, transparent 50%), radial-gradient(ellipse at 50% 80%, hsla(186,90%,50%,0.06) 0%, transparent 50%), radial-gradient(ellipse at 70% 60%, hsla(330,90%,60%,0.05) 0%, transparent 40%), radial-gradient(ellipse at 30% 30%, hsla(25,95%,60%,0.04) 0%, transparent 40%)',
             backgroundSize: '200% 200%',
           }}
         />

@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { useState, useEffect, useRef } from 'react';
+import { motion, useInView } from 'framer-motion';
 import { ArrowDown, ExternalLink, Mail, Download } from 'lucide-react';
 import profileAvatar from '@/assets/profile-avatar.png';
 
@@ -11,10 +11,55 @@ const phrases = [
   'Technology Explorer',
 ];
 
+const NameTypewriter = ({ text, trigger }: { text: string; trigger: boolean }) => {
+  const [displayed, setDisplayed] = useState('');
+  const [done, setDone] = useState(false);
+
+  useEffect(() => {
+    if (!trigger) {
+      setDisplayed('');
+      setDone(false);
+      return;
+    }
+    setDisplayed('');
+    setDone(false);
+    let i = 0;
+    const interval = setInterval(() => {
+      i++;
+      setDisplayed(text.slice(0, i));
+      if (i >= text.length) {
+        clearInterval(interval);
+        setDone(true);
+      }
+    }, 70);
+    return () => clearInterval(interval);
+  }, [trigger, text]);
+
+  return (
+    <span className={`text-gradient-name inline-block ${done ? 'animate-breathe' : ''}`}>
+      {displayed}
+      {!done && (
+        <span
+          className="inline-block w-0.5 h-[0.85em] ml-0.5 align-middle"
+          style={{
+            background: 'hsl(270,70%,65%)',
+            boxShadow: '0 0 8px hsl(270,70%,65%)',
+            animation: 'blink 0.7s step-end infinite',
+          }}
+        />
+      )}
+    </span>
+  );
+};
+
 const HeroSection = () => {
   const [phraseIndex, setPhraseIndex] = useState(0);
   const [text, setText] = useState('');
   const [isDeleting, setIsDeleting] = useState(false);
+  const [profileHovered, setProfileHovered] = useState(false);
+
+  const ref = useRef(null);
+  const inView = useInView(ref, { margin: '-100px' });
 
   useEffect(() => {
     const current = phrases[phraseIndex];
@@ -35,8 +80,8 @@ const HeroSection = () => {
   }, [text, isDeleting, phraseIndex]);
 
   return (
-    <section className="min-h-screen flex items-center justify-center section-padding relative" id="hero">
-      <div className="max-w-7xl mx-auto w-full grid md:grid-cols-2 gap-12 items-center">
+    <section className="min-h-screen flex items-center justify-center section-padding relative" id="hero" ref={ref}>
+      <div className="max-w-7xl mx-auto w-full grid md:grid-cols-2 gap-12 items-center relative z-10">
         {/* Left */}
         <motion.div
           initial={{ opacity: 0, x: -60 }}
@@ -59,9 +104,7 @@ const HeroSection = () => {
             className="text-5xl md:text-7xl font-heading font-bold mb-4 leading-tight"
           >
             Hi, I'm{' '}
-            <span className="text-gradient-name name-shimmer animate-breathe inline-block">
-              Mohd Saad Khan
-            </span>
+            <NameTypewriter text="Mohd Saad Khan" trigger={inView} />
           </motion.h1>
 
           <motion.div
@@ -73,7 +116,7 @@ const HeroSection = () => {
             <span
               className="bg-clip-text text-transparent"
               style={{
-                backgroundImage: 'linear-gradient(90deg, hsl(186,90%,50%), hsl(270,70%,60%))',
+                backgroundImage: 'linear-gradient(90deg, hsl(186,90%,50%), hsl(270,70%,65%))',
                 filter: 'drop-shadow(0 0 8px hsla(186,90%,50%,0.4))',
               }}
             >
@@ -106,27 +149,27 @@ const HeroSection = () => {
             className="flex flex-wrap gap-4"
           >
             <a
-              href="#projects"
-              className="ripple-container group relative px-6 py-3 rounded-lg font-heading font-semibold text-sm bg-gradient-primary text-primary-foreground overflow-hidden transition-transform hover:-translate-y-1 glow-blue"
+              href="#"
+              className="ripple-container group relative px-6 py-3 rounded-lg font-heading font-semibold text-sm bg-gradient-primary text-primary-foreground overflow-hidden transition-transform hover:-translate-y-1 glow-purple"
             >
               <span className="relative z-10 flex items-center gap-2">
+                Download Resume <Download size={16} />
+              </span>
+            </a>
+            <a
+              href="#projects"
+              className="ripple-container group relative px-6 py-3 rounded-lg font-heading font-semibold text-sm border border-primary/30 text-foreground hover:border-primary/60 transition-all hover:-translate-y-1 hover:glow-pink"
+            >
+              <span className="flex items-center gap-2">
                 View Projects <ExternalLink size={16} />
               </span>
             </a>
             <a
               href="#contact"
-              className="ripple-container group relative px-6 py-3 rounded-lg font-heading font-semibold text-sm border border-primary/30 text-foreground hover:border-primary/60 transition-all hover:-translate-y-1 hover:glow-purple"
-            >
-              <span className="flex items-center gap-2">
-                Contact Me <Mail size={16} />
-              </span>
-            </a>
-            <a
-              href="#"
               className="ripple-container group relative px-6 py-3 rounded-lg font-heading font-semibold text-sm border border-accent/30 text-foreground hover:border-accent/60 transition-all hover:-translate-y-1 hover:glow-cyan"
             >
               <span className="flex items-center gap-2">
-                Download Resume <Download size={16} />
+                Contact Me <Mail size={16} />
               </span>
             </a>
           </motion.div>
@@ -139,11 +182,15 @@ const HeroSection = () => {
           transition={{ delay: 0.4, duration: 0.8 }}
           className="flex justify-center"
         >
-          <div className="relative">
+          <div
+            className="relative"
+            onMouseEnter={() => setProfileHovered(true)}
+            onMouseLeave={() => setProfileHovered(false)}
+          >
             {/* Animated ring */}
             <div className="absolute inset-0 rounded-full animate-spin-slow"
               style={{
-                background: 'conic-gradient(from 0deg, hsl(217,91%,60%), hsl(270,70%,60%), hsl(186,90%,50%), hsl(330,90%,60%), hsl(25,95%,60%), hsl(217,91%,60%))',
+                background: 'conic-gradient(from 0deg, hsl(270,70%,65%), hsl(330,90%,60%), hsl(186,90%,50%), hsl(25,95%,60%), hsl(270,70%,65%))',
                 padding: '3px',
                 borderRadius: '50%',
                 width: 'calc(100% + 16px)',
@@ -153,7 +200,14 @@ const HeroSection = () => {
                 filter: 'blur(2px)',
               }}
             />
-            <div className="w-64 h-64 md:w-80 md:h-80 rounded-full overflow-hidden relative z-10 border-4 border-background">
+            <div
+              className="w-64 h-64 md:w-80 md:h-80 rounded-full overflow-hidden relative z-10 border-4 border-background transition-shadow duration-500"
+              style={{
+                boxShadow: profileHovered
+                  ? '0 0 30px hsla(270,70%,65%,0.5), 0 0 60px hsla(330,90%,60%,0.3), 0 0 90px hsla(186,90%,50%,0.2)'
+                  : '0 0 0px transparent',
+              }}
+            >
               <img
                 src={profileAvatar}
                 alt="Mohd Saad Khan"
@@ -166,10 +220,10 @@ const HeroSection = () => {
                 key={i}
                 className="absolute w-2 h-2 rounded-full"
                 style={{
-                  background: ['#4F8EF7', '#8B5CF6', '#06B6D4', '#EC4899', '#F97316', '#4F8EF7', '#8B5CF6', '#06B6D4'][i],
+                  background: ['#8B5CF6', '#EC4899', '#06B6D4', '#F97316', '#8B5CF6', '#EC4899', '#06B6D4', '#F97316'][i],
                   top: `${15 + Math.sin(i * 0.9) * 40}%`,
                   left: `${15 + Math.cos(i * 0.9) * 45}%`,
-                  boxShadow: `0 0 8px ${['#4F8EF7', '#8B5CF6', '#06B6D4', '#EC4899', '#F97316', '#4F8EF7', '#8B5CF6', '#06B6D4'][i]}`,
+                  boxShadow: `0 0 8px ${['#8B5CF6', '#EC4899', '#06B6D4', '#F97316', '#8B5CF6', '#EC4899', '#06B6D4', '#F97316'][i]}`,
                 }}
                 animate={{
                   y: [0, -25, 0],
@@ -190,7 +244,7 @@ const HeroSection = () => {
 
       {/* Scroll indicator */}
       <motion.div
-        className="absolute bottom-8 left-1/2 -translate-x-1/2"
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10"
         animate={{ y: [0, 10, 0] }}
         transition={{ duration: 2, repeat: Infinity }}
       >

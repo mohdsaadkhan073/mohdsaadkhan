@@ -6,13 +6,13 @@ const categories = [
     title: 'Programming Languages',
     skills: ['C', 'C++', 'Python', 'Java', 'HTML', 'CSS', 'JavaScript', 'SQL'],
     gradient: 'from-primary to-accent',
-    glowColor: 'hsl(217,91%,60%)',
+    glowColor: 'hsl(270,70%,65%)',
   },
   {
     title: 'CS Knowledge',
     skills: ['Data Structures', 'DBMS', 'OOP', 'Computer Graphics', 'Digital Techniques', 'Operating Systems', 'Computer Networking'],
     gradient: 'from-secondary to-neon-pink',
-    glowColor: 'hsl(270,70%,60%)',
+    glowColor: 'hsl(330,90%,60%)',
   },
   {
     title: 'Tools & Platforms',
@@ -52,8 +52,11 @@ const SkillCard = ({ skill, index, inView, glowColor }: { skill: string; index: 
       className="relative px-4 py-3 rounded-xl bg-muted/40 border border-border/50 text-center font-body text-sm text-foreground cursor-default overflow-hidden shimmer"
       style={{
         transform: `perspective(500px) rotateX(${tilt.x}deg) rotateY(${tilt.y}deg) ${hovered ? 'translateY(-4px) scale(1.06)' : ''}`,
-        boxShadow: hovered ? `0 0 25px ${glowColor}40, 0 10px 30px hsla(0,0%,0%,0.3)` : 'none',
-        transition: 'transform 0.2s ease, box-shadow 0.3s ease',
+        boxShadow: hovered
+          ? `0 0 20px ${glowColor}50, 0 0 40px ${glowColor}25, 0 10px 30px hsla(0,0%,0%,0.3)`
+          : 'none',
+        borderColor: hovered ? `${glowColor}60` : undefined,
+        transition: 'transform 0.2s ease, box-shadow 0.3s ease, border-color 0.3s ease',
       }}
     >
       <span className="relative z-10">{skill}</span>

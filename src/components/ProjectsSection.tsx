@@ -41,16 +41,25 @@ const projects = [
   },
 ];
 
+const glowColors = [
+  { border: 'hsl(270,70%,65%)', shadow: 'hsla(270,70%,65%,0.3)' },
+  { border: 'hsl(186,90%,50%)', shadow: 'hsla(186,90%,50%,0.3)' },
+  { border: 'hsl(330,90%,60%)', shadow: 'hsla(330,90%,60%,0.3)' },
+  { border: 'hsl(25,95%,60%)', shadow: 'hsla(25,95%,60%,0.3)' },
+  { border: 'hsl(186,90%,50%)', shadow: 'hsla(186,90%,50%,0.3)' },
+];
+
 const borderGradients = [
-  'linear-gradient(135deg, hsl(217,91%,60%), hsl(186,90%,50%))',
-  'linear-gradient(135deg, hsl(186,90%,50%), hsl(270,70%,60%))',
-  'linear-gradient(135deg, hsl(270,70%,60%), hsl(330,90%,60%))',
+  'linear-gradient(135deg, hsl(270,70%,65%), hsl(186,90%,50%))',
+  'linear-gradient(135deg, hsl(186,90%,50%), hsl(330,90%,60%))',
   'linear-gradient(135deg, hsl(330,90%,60%), hsl(25,95%,60%))',
-  'linear-gradient(135deg, hsl(25,95%,60%), hsl(217,91%,60%))',
+  'linear-gradient(135deg, hsl(25,95%,60%), hsl(270,70%,65%))',
+  'linear-gradient(135deg, hsl(270,70%,65%), hsl(330,90%,60%))',
 ];
 
 const ProjectCard = ({ project, index, inView }: { project: typeof projects[0]; index: number; inView: boolean }) => {
   const [hovered, setHovered] = useState(false);
+  const glow = glowColors[index % glowColors.length];
 
   return (
     <motion.div
@@ -62,12 +71,15 @@ const ProjectCard = ({ project, index, inView }: { project: typeof projects[0]; 
       className="group relative bg-gradient-card rounded-2xl overflow-hidden transition-all duration-300"
       style={{
         transform: hovered ? 'translateY(-8px) scale(1.02)' : '',
-        boxShadow: hovered ? '0 20px 40px hsla(0,0%,0%,0.3)' : 'none',
+        boxShadow: hovered
+          ? `0 0 20px ${glow.shadow}, 0 0 40px ${glow.shadow}, 0 20px 40px hsla(0,0%,0%,0.3)`
+          : 'none',
+        borderColor: hovered ? glow.border : undefined,
       }}
     >
       {/* Animated gradient border */}
       <div
-        className="absolute inset-0 rounded-2xl opacity-40 group-hover:opacity-80 transition-opacity duration-300"
+        className="absolute inset-0 rounded-2xl opacity-30 group-hover:opacity-90 transition-opacity duration-300"
         style={{
           background: borderGradients[index % 5],
           padding: '1px',
@@ -91,7 +103,6 @@ const ProjectCard = ({ project, index, inView }: { project: typeof projects[0]; 
           </motion.span>
         )}
 
-        {/* Card shine effect */}
         {hovered && (
           <motion.div
             initial={{ x: '-100%', opacity: 0 }}
@@ -118,7 +129,7 @@ const ProjectCard = ({ project, index, inView }: { project: typeof projects[0]; 
               key={tag}
               className="px-2 py-1 text-xs rounded-md bg-primary/10 text-primary border border-primary/20 font-body"
               style={{
-                boxShadow: hovered ? '0 0 8px hsl(217 91% 60% / 0.2)' : 'none',
+                boxShadow: hovered ? `0 0 10px ${glow.shadow}` : 'none',
                 transition: 'box-shadow 0.3s',
               }}
             >

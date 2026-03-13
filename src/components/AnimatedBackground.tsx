@@ -16,7 +16,6 @@ const AnimatedBackground = () => {
     const particles: { x: number; y: number; vx: number; vy: number; size: number; color: string; alpha: number; baseAlpha: number }[] = [];
     const largeParticles: { x: number; y: number; vx: number; vy: number; size: number; alpha: number; hue: number }[] = [];
 
-    // Small particles
     for (let i = 0; i < 100; i++) {
       const alpha = Math.random() * 0.5 + 0.1;
       particles.push({
@@ -25,13 +24,12 @@ const AnimatedBackground = () => {
         vx: (Math.random() - 0.5) * 0.6,
         vy: (Math.random() - 0.5) * 0.6,
         size: Math.random() * 2.5 + 0.5,
-        color: ['#4F8EF7', '#8B5CF6', '#06B6D4', '#EC4899', '#F97316'][Math.floor(Math.random() * 5)],
+        color: ['#8B5CF6', '#EC4899', '#06B6D4', '#F97316', '#A78BFA'][Math.floor(Math.random() * 5)],
         alpha,
         baseAlpha: alpha,
       });
     }
 
-    // Larger glowing particles
     for (let i = 0; i < 8; i++) {
       largeParticles.push({
         x: Math.random() * w,
@@ -40,7 +38,7 @@ const AnimatedBackground = () => {
         vy: (Math.random() - 0.5) * 0.2,
         size: Math.random() * 40 + 20,
         alpha: Math.random() * 0.04 + 0.02,
-        hue: [217, 270, 186, 330][Math.floor(Math.random() * 4)],
+        hue: [270, 330, 186, 25][Math.floor(Math.random() * 4)],
       });
     }
 
@@ -62,7 +60,6 @@ const AnimatedBackground = () => {
       ctx.clearRect(0, 0, w, h);
       time += 0.01;
 
-      // Large glowing orbs
       for (const lp of largeParticles) {
         lp.x += lp.vx;
         lp.y += lp.vy;
@@ -80,12 +77,10 @@ const AnimatedBackground = () => {
         ctx.fill();
       }
 
-      // Small particles
       particles.forEach((p) => {
         p.x += p.vx;
         p.y += p.vy;
 
-        // Mouse influence
         const dx = mouse.x - p.x;
         const dy = mouse.y - p.y;
         const dist = Math.sqrt(dx * dx + dy * dy);
@@ -97,7 +92,6 @@ const AnimatedBackground = () => {
           p.alpha += (p.baseAlpha - p.alpha) * 0.05;
         }
 
-        // Damping
         p.vx *= 0.999;
         p.vy *= 0.999;
 
@@ -113,7 +107,6 @@ const AnimatedBackground = () => {
         ctx.fill();
       });
 
-      // Network connections
       ctx.lineWidth = 0.5;
       for (let i = 0; i < particles.length; i++) {
         for (let j = i + 1; j < particles.length; j++) {
@@ -123,7 +116,7 @@ const AnimatedBackground = () => {
           if (dist < 130) {
             const alpha = 0.08 * (1 - dist / 130);
             ctx.globalAlpha = alpha;
-            ctx.strokeStyle = '#4F8EF7';
+            ctx.strokeStyle = '#8B5CF6';
             ctx.beginPath();
             ctx.moveTo(particles[i].x, particles[i].y);
             ctx.lineTo(particles[j].x, particles[j].y);
@@ -132,7 +125,6 @@ const AnimatedBackground = () => {
         }
       }
 
-      // Soft wave overlay
       ctx.globalAlpha = 0.015;
       ctx.beginPath();
       ctx.moveTo(0, h * 0.6);
@@ -143,7 +135,7 @@ const AnimatedBackground = () => {
       ctx.lineTo(w, h);
       ctx.lineTo(0, h);
       ctx.closePath();
-      ctx.fillStyle = 'hsl(217,91%,60%)';
+      ctx.fillStyle = 'hsl(270,70%,65%)';
       ctx.fill();
 
       ctx.globalAlpha = 1;
@@ -161,23 +153,20 @@ const AnimatedBackground = () => {
 
   return (
     <>
-      {/* Gradient mesh background */}
       <div className="fixed inset-0 z-0">
         <div
           className="absolute inset-0 animate-gradient"
           style={{
-            background: 'radial-gradient(ellipse at 20% 50%, hsla(270,70%,60%,0.1) 0%, transparent 50%), radial-gradient(ellipse at 80% 20%, hsla(217,91%,60%,0.1) 0%, transparent 50%), radial-gradient(ellipse at 50% 80%, hsla(186,90%,50%,0.06) 0%, transparent 50%), radial-gradient(ellipse at 70% 60%, hsla(330,90%,60%,0.05) 0%, transparent 40%), radial-gradient(ellipse at 30% 30%, hsla(25,95%,60%,0.04) 0%, transparent 40%)',
+            background: 'radial-gradient(ellipse at 20% 50%, hsla(270,70%,65%,0.08) 0%, transparent 50%), radial-gradient(ellipse at 80% 20%, hsla(330,90%,60%,0.07) 0%, transparent 50%), radial-gradient(ellipse at 50% 80%, hsla(186,90%,50%,0.05) 0%, transparent 50%), radial-gradient(ellipse at 70% 60%, hsla(25,95%,60%,0.04) 0%, transparent 40%)',
             backgroundSize: '200% 200%',
           }}
         />
       </div>
-      {/* Particle canvas */}
       <canvas ref={canvasRef} className="fixed inset-0 z-0 pointer-events-none" />
-      {/* Grid overlay */}
       <div
-        className="fixed inset-0 z-0 pointer-events-none opacity-[0.03]"
+        className="fixed inset-0 z-0 pointer-events-none opacity-[0.02]"
         style={{
-          backgroundImage: `linear-gradient(hsla(217,91%,60%,0.3) 1px, transparent 1px), linear-gradient(90deg, hsla(217,91%,60%,0.3) 1px, transparent 1px)`,
+          backgroundImage: `linear-gradient(hsla(270,70%,65%,0.3) 1px, transparent 1px), linear-gradient(90deg, hsla(270,70%,65%,0.3) 1px, transparent 1px)`,
           backgroundSize: '60px 60px',
         }}
       />

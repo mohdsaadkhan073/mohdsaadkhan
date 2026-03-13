@@ -36,12 +36,11 @@ const ContactSection = () => {
         </motion.div>
 
         <div className="grid lg:grid-cols-2 gap-10">
-          {/* Contact Form */}
           <motion.div
             initial={{ opacity: 0, x: -40 }}
             animate={inView ? { opacity: 1, x: 0 } : {}}
             transition={{ delay: 0.2 }}
-            className="bg-gradient-card rounded-2xl p-8 border border-border/50"
+            className="bg-gradient-card rounded-2xl p-8 border border-border/50 card-hover-glow"
           >
             <h3 className="text-2xl font-heading font-bold text-gradient-warm mb-6">Let's Connect</h3>
             <form onSubmit={handleSubmit} className="space-y-5">
@@ -87,14 +86,13 @@ const ContactSection = () => {
                 transition={{ delay: 0.7 }}
                 whileHover={{ scale: 1.02, y: -2 }}
                 whileTap={{ scale: 0.98 }}
-                className="ripple-container w-full py-3 rounded-lg font-heading font-semibold text-sm bg-gradient-primary text-primary-foreground glow-blue flex items-center justify-center gap-2 transition-transform"
+                className="ripple-container w-full py-3 rounded-lg font-heading font-semibold text-sm bg-gradient-primary text-primary-foreground glow-purple flex items-center justify-center gap-2 transition-transform"
               >
                 Send Message <Send size={16} />
               </motion.button>
             </form>
           </motion.div>
 
-          {/* Contact Links */}
           <motion.div
             initial={{ opacity: 0, x: 40 }}
             animate={inView ? { opacity: 1, x: 0 } : {}}
@@ -111,7 +109,7 @@ const ContactSection = () => {
                 animate={inView ? { opacity: 1, y: 0 } : {}}
                 transition={{ delay: 0.3 + i * 0.1 }}
                 whileHover={{ scale: 1.03, y: -3 }}
-                className="group flex items-center gap-4 bg-gradient-card rounded-xl p-6 border border-border/50 hover:border-primary/40 transition-all"
+                className="group flex items-center gap-4 bg-gradient-card rounded-xl p-6 border border-border/50 card-hover-glow transition-all"
               >
                 <div className="p-3 rounded-lg bg-primary/10 group-hover:bg-primary/20 transition-colors">
                   <Icon className="text-primary w-6 h-6 group-hover:drop-shadow-lg transition-all" />

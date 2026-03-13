@@ -23,7 +23,7 @@ const EducationSection = () => {
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ delay: 0.2 }}
           whileHover={{ scale: 1.02 }}
-          className="bg-gradient-card rounded-2xl p-8 md:p-12 border border-border/50 hover:border-neon-blue/30 transition-all text-center shimmer overflow-hidden relative"
+          className="bg-gradient-card rounded-2xl p-8 md:p-12 border border-border/50 card-hover-glow transition-all text-center shimmer overflow-hidden relative"
         >
           <motion.div
             animate={{ rotate: [0, 360] }}
@@ -33,11 +33,11 @@ const EducationSection = () => {
             <GraduationCap size={120} />
           </motion.div>
 
-          <GraduationCap className="text-neon-cyan w-12 h-12 mx-auto mb-6" />
+          <GraduationCap className="text-accent w-12 h-12 mx-auto mb-6" />
           <h3 className="text-2xl font-heading font-bold text-foreground mb-2">
             Diploma in Computer Engineering
           </h3>
-          <p className="text-lg text-neon-blue font-heading mb-2">Vidyalankar Polytechnic</p>
+          <p className="text-lg text-primary font-heading mb-2">Vidyalankar Polytechnic</p>
           <p className="text-muted-foreground font-body">MSBTE – Maharashtra State Board of Technical Education</p>
         </motion.div>
       </div>

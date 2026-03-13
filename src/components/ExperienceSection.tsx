@@ -26,8 +26,7 @@ const ExperienceSection = () => {
         </motion.div>
 
         <div className="relative">
-          {/* Timeline line */}
-          <div className="absolute left-8 md:left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-neon-blue via-neon-purple to-neon-cyan" />
+          <div className="absolute left-8 md:left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-primary via-secondary to-accent" />
 
           {items.map((item, i) => {
             const Icon = item.icon;
@@ -42,16 +41,15 @@ const ExperienceSection = () => {
                   isLeft ? 'md:flex-row' : 'md:flex-row-reverse'
                 } flex-row`}
               >
-                {/* Dot */}
                 <div className="absolute left-8 md:left-1/2 w-4 h-4 rounded-full bg-gradient-primary -translate-x-1/2 z-10 animate-pulse-glow" />
 
                 <div className={`ml-16 md:ml-0 md:w-1/2 ${isLeft ? 'md:pr-12 md:text-right' : 'md:pl-12'}`}>
                   <motion.div
                     whileHover={{ scale: 1.03 }}
-                    className="bg-gradient-card rounded-xl p-6 border border-border/50 hover:border-neon-blue/30 transition-all"
+                    className="bg-gradient-card rounded-xl p-6 border border-border/50 card-hover-glow transition-all"
                   >
                     <div className={`flex items-center gap-3 mb-3 ${isLeft ? 'md:justify-end' : ''}`}>
-                      <Icon className="text-neon-blue w-5 h-5" />
+                      <Icon className="text-primary w-5 h-5" />
                       <h3 className="font-heading font-bold text-foreground">{item.title}</h3>
                     </div>
                     <p className="text-sm text-muted-foreground font-body">{item.desc}</p>

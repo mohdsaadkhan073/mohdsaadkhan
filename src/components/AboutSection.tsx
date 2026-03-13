@@ -3,10 +3,10 @@ import { useRef } from 'react';
 import { Code2, Bot, Cpu, Lightbulb } from 'lucide-react';
 
 const icons = [
-  { Icon: Code2, label: 'Programming', colorClass: 'text-primary', glowHsl: '217,91%,60%' },
-  { Icon: Bot, label: 'Automation', colorClass: 'text-secondary', glowHsl: '270,70%,60%' },
+  { Icon: Code2, label: 'Programming', colorClass: 'text-primary', glowHsl: '270,70%,65%' },
+  { Icon: Bot, label: 'Automation', colorClass: 'text-secondary', glowHsl: '330,90%,60%' },
   { Icon: Cpu, label: 'System Architecture', colorClass: 'text-accent', glowHsl: '186,90%,50%' },
-  { Icon: Lightbulb, label: 'Problem Solving', colorClass: 'text-neon-pink', glowHsl: '330,90%,60%' },
+  { Icon: Lightbulb, label: 'Problem Solving', colorClass: 'text-neon-pink', glowHsl: '25,95%,60%' },
 ];
 
 const AboutSection = () => {
@@ -30,7 +30,7 @@ const AboutSection = () => {
           initial={{ opacity: 0, y: 50, scale: 0.95 }}
           animate={inView ? { opacity: 1, y: 0, scale: 1 } : {}}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="bg-gradient-card rounded-2xl p-8 md:p-12 border border-border shimmer relative overflow-hidden"
+          className="bg-gradient-card rounded-2xl p-8 md:p-12 border border-border/50 card-hover-glow shimmer relative overflow-hidden"
         >
           <p className="text-lg text-muted-foreground font-body leading-relaxed text-center max-w-3xl mx-auto mb-12">
             I am a Computer Engineering student passionate about programming, automation, and building
@@ -47,7 +47,7 @@ const AboutSection = () => {
                 animate={inView ? { opacity: 1, y: 0, scale: 1 } : {}}
                 transition={{ delay: 0.3 + i * 0.1, type: 'spring' }}
                 whileHover={{ scale: 1.1, y: -8 }}
-                className="flex flex-col items-center gap-3 p-6 rounded-xl bg-muted/30 border border-border/50 hover:border-primary/30 transition-all group"
+                className="flex flex-col items-center gap-3 p-6 rounded-xl bg-muted/30 border border-border/50 card-hover-glow transition-all group"
                 style={{ cursor: 'default' }}
               >
                 <motion.div whileHover={{ rotate: [0, -10, 10, 0] }} transition={{ duration: 0.5 }}>

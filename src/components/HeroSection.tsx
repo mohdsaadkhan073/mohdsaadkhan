@@ -31,7 +31,7 @@ const NameTypewriter = ({ text, trigger }: { text: string; trigger: boolean }) =
         clearInterval(interval);
         setDone(true);
       }
-    }, 70);
+    }, 130);
     return () => clearInterval(interval);
   }, [trigger, text]);
 

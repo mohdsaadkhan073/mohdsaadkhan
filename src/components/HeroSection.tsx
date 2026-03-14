@@ -152,7 +152,8 @@ const HeroSection = () => {
             className="flex flex-wrap gap-4"
           >
             <a
-              href="#"
+              href="/MOHD_SAAD_KHAN_Resume.pdf"
+              download="MOHD_SAAD_KHAN_Resume.pdf"
               className="ripple-container group relative px-6 py-3 rounded-lg font-heading font-semibold text-sm bg-gradient-primary text-primary-foreground overflow-hidden transition-transform hover:-translate-y-1 glow-purple"
             >
               <span className="relative z-10 flex items-center gap-2">

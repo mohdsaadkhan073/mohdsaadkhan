@@ -103,8 +103,11 @@ const HeroSection = () => {
             transition={{ delay: 0.3 }}
             className="text-5xl md:text-7xl font-heading font-bold mb-4 leading-tight"
           >
-            Hi, I'm{' '}
-            <NameTypewriter text="Mohd Saad Khan" trigger={inView} />
+            Hi, I'm
+            <br />
+            <span className="whitespace-nowrap">
+              <NameTypewriter text="Mohd Saad Khan" trigger={inView} />
+            </span>
           </motion.h1>
 
           <motion.div

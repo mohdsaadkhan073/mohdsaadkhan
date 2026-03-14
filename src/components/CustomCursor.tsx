@@ -77,8 +77,8 @@ const CustomCursor = () => {
     };
 
     const onClick = (e: MouseEvent) => {
-      for (let i = 0; i < 10; i++) {
-        const angle = (Math.PI * 2 * i) / 10;
+      for (let i = 0; i < 16; i++) {
+        const angle = (Math.PI * 2 * i) / 16;
         const speed = 1.5 + Math.random() * 2.5;
         sparks.push({
           x: e.clientX, y: e.clientY,

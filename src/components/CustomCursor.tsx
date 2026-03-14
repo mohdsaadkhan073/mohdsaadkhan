@@ -39,15 +39,17 @@ const CustomCursor = () => {
       mousePos.current.x = e.clientX;
       mousePos.current.y = e.clientY;
 
-      // Add trail particle
-      trail.push({
-        x: e.clientX,
-        y: e.clientY,
-        alpha: 0.5,
-        size: 2,
-        color: colors[Math.floor(Math.random() * colors.length)],
-      });
-      if (trail.length > 20) trail.shift();
+      // Add trail particles (multiple per move for more intensity)
+      for (let j = 0; j < 3; j++) {
+        trail.push({
+          x: e.clientX + (Math.random() - 0.5) * 10,
+          y: e.clientY + (Math.random() - 0.5) * 10,
+          alpha: 0.4 + Math.random() * 0.3,
+          size: 1.5 + Math.random() * 1.5,
+          color: colors[Math.floor(Math.random() * colors.length)],
+        });
+      }
+      if (trail.length > 50) trail.splice(0, trail.length - 50);
 
       // Hero lingering particles
       const heroEl = document.getElementById('hero');

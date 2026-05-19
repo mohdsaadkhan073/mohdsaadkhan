@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { ArrowDown, ExternalLink, Mail, Download } from 'lucide-react';
-import profileAvatar from '@/assets/profile-avatar.png';
+import RobotAvatar from './RobotAvatar';
 
 const phrases = [
   'Computer Engineering Student',
@@ -56,7 +56,6 @@ const HeroSection = () => {
   const [phraseIndex, setPhraseIndex] = useState(0);
   const [text, setText] = useState('');
   const [isDeleting, setIsDeleting] = useState(false);
-  const [profileHovered, setProfileHovered] = useState(false);
 
   const ref = useRef(null);
   const inView = useInView(ref, { margin: '-100px' });
@@ -81,7 +80,8 @@ const HeroSection = () => {
 
   return (
     <section className="min-h-screen flex items-center justify-center section-padding relative" id="hero" ref={ref}>
-      <div className="max-w-7xl mx-auto w-full grid md:grid-cols-2 gap-12 items-center relative z-10">
+      <RobotAvatar />
+      <div className="max-w-7xl mx-auto w-full grid md:grid-cols-2 gap-12 items-center relative z-10 pointer-events-none">
         {/* Left */}
         <motion.div
           initial={{ opacity: 0, x: -60 }}
@@ -149,7 +149,7 @@ const HeroSection = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.7 }}
-            className="flex flex-wrap gap-4"
+            className="flex flex-wrap gap-4 pointer-events-auto"
           >
             <a
               href="/MOHD_SAAD_KHAN_Resume.pdf"
@@ -177,72 +177,6 @@ const HeroSection = () => {
               </span>
             </a>
           </motion.div>
-        </motion.div>
-
-        {/* Right - Profile */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 0.4, duration: 0.8 }}
-          className="flex justify-center"
-        >
-          <div
-            className="relative"
-            onMouseEnter={() => setProfileHovered(true)}
-            onMouseLeave={() => setProfileHovered(false)}
-          >
-            {/* Animated ring */}
-            <div className="absolute inset-0 rounded-full animate-spin-slow"
-              style={{
-                background: 'conic-gradient(from 0deg, hsl(270,70%,65%), hsl(330,90%,60%), hsl(186,90%,50%), hsl(25,95%,60%), hsl(270,70%,65%))',
-                padding: '3px',
-                borderRadius: '50%',
-                width: 'calc(100% + 16px)',
-                height: 'calc(100% + 16px)',
-                top: '-8px',
-                left: '-8px',
-                filter: 'blur(2px)',
-              }}
-            />
-            <div
-              className="w-64 h-64 md:w-80 md:h-80 rounded-full overflow-hidden relative z-10 border-4 border-background transition-shadow duration-500"
-              style={{
-                boxShadow: profileHovered
-                  ? '0 0 30px hsla(270,70%,65%,0.5), 0 0 60px hsla(330,90%,60%,0.3), 0 0 90px hsla(186,90%,50%,0.2)'
-                  : '0 0 0px transparent',
-              }}
-            >
-              <img
-                src={profileAvatar}
-                alt="Mohd Saad Khan"
-                className="w-full h-full object-cover"
-              />
-            </div>
-            {/* Floating particles */}
-            {[...Array(8)].map((_, i) => (
-              <motion.div
-                key={i}
-                className="absolute w-2 h-2 rounded-full"
-                style={{
-                  background: ['#8B5CF6', '#EC4899', '#06B6D4', '#F97316', '#8B5CF6', '#EC4899', '#06B6D4', '#F97316'][i],
-                  top: `${15 + Math.sin(i * 0.9) * 40}%`,
-                  left: `${15 + Math.cos(i * 0.9) * 45}%`,
-                  boxShadow: `0 0 8px ${['#8B5CF6', '#EC4899', '#06B6D4', '#F97316', '#8B5CF6', '#EC4899', '#06B6D4', '#F97316'][i]}`,
-                }}
-                animate={{
-                  y: [0, -25, 0],
-                  x: [0, 12, 0],
-                  opacity: [0.3, 0.9, 0.3],
-                  scale: [1, 1.3, 1],
-                }}
-                transition={{
-                  duration: 3 + i * 0.4,
-                  repeat: Infinity,
-                  ease: 'easeInOut',
-                }}
-              />
-            ))}
-          </div>
         </motion.div>
       </div>
 

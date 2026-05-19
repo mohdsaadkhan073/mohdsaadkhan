@@ -3,47 +3,71 @@ import Matter from 'matter-js';
 import { motion, useInView } from 'framer-motion';
 
 import { 
-  Atom, Triangle, FileCode2, Code2, BrainCircuit, Network, Layout,
-  Server, FileCode, Coffee, Palette, Activity, Box, TerminalSquare, 
-  Globe, Brush, Bot, Github, Lightbulb
+  Atom, FileCode2, Code2, BrainCircuit, Network, Layout,
+  Server, FileCode, Coffee, Palette, Activity, TerminalSquare, 
+  Globe, Brush, Bot, Github, Lightbulb, GitBranch, Container,
+  Workflow, Blocks, Database, HardDrive, Wifi, Plug, Zap,
+  Sparkles, Cloud, Gauge, Bug, MonitorSmartphone, Cog, Terminal
 } from 'lucide-react';
 
 const SKILLS = [
+  // Large — core strengths
   { text: 'React', size: 'large', color: 'hsl(186,90%,50%)', icon: Atom },
-  { text: 'Next.js', size: 'large', color: 'hsl(0,0%,100%)', icon: Triangle },
   { text: 'Python', size: 'large', color: 'hsl(45,90%,50%)', icon: FileCode2 },
   { text: 'TypeScript', size: 'large', color: 'hsl(215,90%,60%)', icon: FileCode },
-  { text: 'AI', size: 'medium-large', color: 'hsl(330,90%,60%)', icon: BrainCircuit },
+  { text: 'Automation', size: 'large', color: 'hsl(270,70%,65%)', icon: Bot },
+
+  // Medium-Large — strong skills
+  { text: 'AI Automation', size: 'medium-large', color: 'hsl(330,90%,60%)', icon: BrainCircuit },
   { text: 'System Design', size: 'medium-large', color: 'hsl(270,70%,65%)', icon: Network },
   { text: 'Web Dev', size: 'medium-large', color: 'hsl(150,80%,50%)', icon: Layout },
+  { text: 'Node.js', size: 'medium-large', color: 'hsl(120,60%,50%)', icon: Server },
+
+  // Medium — solid skills
   { text: 'JavaScript', size: 'medium', color: 'hsl(45,90%,50%)', icon: Code2 },
-  { text: 'Node.js', size: 'medium', color: 'hsl(120,60%,50%)', icon: Server },
   { text: 'C++', size: 'medium', color: 'hsl(210,80%,50%)', icon: TerminalSquare },
   { text: 'Java', size: 'medium', color: 'hsl(15,80%,50%)', icon: Coffee },
   { text: 'Tailwind CSS', size: 'medium', color: 'hsl(195,90%,50%)', icon: Palette },
   { text: 'Framer Motion', size: 'medium', color: 'hsl(300,80%,50%)', icon: Activity },
-  { text: 'Three.js', size: 'medium', color: 'hsl(0,0%,90%)', icon: Box },
+  { text: 'Docker', size: 'medium', color: 'hsl(210,80%,60%)', icon: Container },
+  { text: 'Git', size: 'medium', color: 'hsl(15,90%,55%)', icon: GitBranch },
+  { text: 'n8n', size: 'medium', color: 'hsl(150,70%,50%)', icon: Workflow },
+  { text: 'SQL', size: 'medium', color: 'hsl(200,70%,50%)', icon: Database },
+  { text: 'Linux', size: 'medium', color: 'hsl(45,70%,50%)', icon: Terminal },
+  { text: 'REST APIs', size: 'medium', color: 'hsl(25,90%,55%)', icon: Plug },
+  { text: 'Data Structures', size: 'medium', color: 'hsl(280,60%,55%)', icon: Blocks },
+
+  // Small — supporting skills
   { text: 'C', size: 'small', color: 'hsl(210,80%,40%)', icon: TerminalSquare },
   { text: 'HTML', size: 'small', color: 'hsl(15,90%,50%)', icon: Globe },
   { text: 'CSS', size: 'small', color: 'hsl(210,90%,50%)', icon: Brush },
-  { text: 'Automation', size: 'large', color: 'hsl(270,70%,65%)', icon: Bot },
   { text: 'GitHub', size: 'small', color: 'hsl(0,0%,90%)', icon: Github },
   { text: 'Problem Solving', size: 'small', color: 'hsl(330,90%,60%)', icon: Lightbulb },
+  { text: 'OOP', size: 'small', color: 'hsl(260,60%,55%)', icon: Blocks },
+  { text: 'DBMS', size: 'small', color: 'hsl(200,60%,45%)', icon: HardDrive },
+  { text: 'PL/SQL', size: 'small', color: 'hsl(200,70%,40%)', icon: Database },
+  { text: 'Networking', size: 'small', color: 'hsl(170,70%,50%)', icon: Wifi },
+  { text: 'APIs', size: 'small', color: 'hsl(25,80%,50%)', icon: Plug },
+  { text: 'Prompt Eng.', size: 'small', color: 'hsl(300,70%,55%)', icon: Sparkles },
+  { text: 'GitHub Actions', size: 'small', color: 'hsl(220,70%,55%)', icon: Cog },
+  { text: 'Cloud Basics', size: 'small', color: 'hsl(200,80%,60%)', icon: Cloud },
+  { text: 'Performance', size: 'small', color: 'hsl(120,70%,45%)', icon: Gauge },
+  { text: 'Debugging', size: 'small', color: 'hsl(0,70%,55%)', icon: Bug },
+  { text: 'UI Engineering', size: 'small', color: 'hsl(186,80%,55%)', icon: MonitorSmartphone },
+  { text: 'Auto Workflows', size: 'small', color: 'hsl(270,60%,55%)', icon: Zap },
 ];
 
 const getSize = (sizeCat: string, width: number, totalSkills: number) => {
   const isMobile = width < 768;
   
-  // Dynamic scaling based on the number of skills.
-  // We optimized a base of 1.15 for exactly 20 skills. As the number increases, the base size scales down proportionally.
-  const densityFactor = Math.max(0.4, 20 / totalSkills); 
+  // Higher floor (0.7) and higher base (1.4) = bigger, more congested bubbles
+  const densityFactor = Math.max(0.7, 20 / totalSkills); 
+  const base = (isMobile ? 0.65 : 1.4) * densityFactor; 
   
-  const base = (isMobile ? 0.50 : 1.15) * densityFactor; 
-  
-  if (sizeCat === 'large') return 70 * base;
-  if (sizeCat === 'medium-large') return 60 * base;
-  if (sizeCat === 'medium') return 50 * base;
-  return 42 * base; // small
+  if (sizeCat === 'large') return 75 * base;
+  if (sizeCat === 'medium-large') return 65 * base;
+  if (sizeCat === 'medium') return 55 * base;
+  return 46 * base; // small
 };
 
 const SkillsSection = () => {
@@ -288,19 +312,21 @@ const SkillsSection = () => {
                     Matter.World.add(engineRef.current.world, dragConstraintRef.current);
                   }}
                 >
-                  <div className="flex flex-col items-center justify-center pointer-events-none gap-1">
+                  <div className="flex flex-col items-center justify-center pointer-events-none gap-0.5" style={{ width: radius * 1.6, height: radius * 1.6 }}>
                     {skill.icon && (
                       <skill.icon 
-                        size={Math.max(16, radius * 0.45)} 
+                        size={Math.max(12, radius * 0.38)} 
                         color={skill.color} 
-                        strokeWidth={1.5} 
+                        strokeWidth={1.5}
+                        style={{ flexShrink: 0 }}
                       />
                     )}
                     <span 
-                      className="text-center px-2"
+                      className="text-center leading-tight break-words overflow-hidden"
                       style={{ 
-                        fontSize: `${Math.max(0.65, radius * 0.02)}rem`,
-                        lineHeight: '1.1'
+                        fontSize: `${Math.max(0.45, Math.min(0.75, (radius * 1.4) / Math.max(skill.text.length, 1) * 0.14))}rem`,
+                        maxWidth: radius * 1.5,
+                        wordBreak: 'break-word',
                       }}
                     >
                       {skill.text}

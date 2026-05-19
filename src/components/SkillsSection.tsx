@@ -38,7 +38,7 @@ const getSize = (sizeCat: string, width: number, totalSkills: number) => {
   // We optimized a base of 1.15 for exactly 20 skills. As the number increases, the base size scales down proportionally.
   const densityFactor = Math.max(0.4, 20 / totalSkills); 
   
-  const base = (isMobile ? 0.75 : 1.15) * densityFactor; 
+  const base = (isMobile ? 0.50 : 1.15) * densityFactor; 
   
   if (sizeCat === 'large') return 70 * base;
   if (sizeCat === 'medium-large') return 60 * base;

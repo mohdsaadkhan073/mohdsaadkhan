@@ -1,0 +1,177 @@
+[
+  {
+    "title": "Jarvis Desktop Assistant",
+    "slug": "jarvis-desktop-assistant",
+    "shortDescription": "Voice-controlled automation assistant capable of executing system commands.",
+    "longDescription": "A sophisticated voice-activated desktop assistant built with Python. It leverages speech recognition and natural language processing to execute system commands, automate daily workflows, manage applications, and interact seamlessly with the operating system environment. Features include context-aware responses and intelligent task delegation.",
+    "features": [
+      "Voice activation and speech-to-text processing",
+      "Automated system control and application management",
+      "Context-aware NLP response generation",
+      "Customizable workflow automation scripts"
+    ],
+    "category": [
+      "AI",
+      "Automation",
+      "Tools"
+    ],
+    "priority": "high",
+    "featured": true,
+    "previewType": "image",
+    "preview": "",
+    "github": "https://github.com/mohdsaadkhan073",
+    "live": "",
+    "readme": "/readmes/dummy.md",
+    "technologies": [
+      "Python",
+      "SpeechRecognition",
+      "NLP",
+      "Automation"
+    ]
+  },
+  {
+    "title": "Haji Cloth Store",
+    "slug": "haji-cloth-store",
+    "shortDescription": "Live e-commerce website developed for a clothing business.",
+    "longDescription": "A fully functional e-commerce platform developed for Haji Cloth Store. Built for scale and performance, it features a modern frontend interface, seamless checkout flows, dynamic product filtering, and an optimized mobile experience. The architecture ensures high availability and fast load times.",
+    "features": [
+      "Inventory indexing and stock-health tracking",
+      "Admin workflows for price, category, and media control",
+      "Order lifecycle monitoring and analytics snapshots",
+      "Seamless checkout and payment gateway integration"
+    ],
+    "category": [
+      "Web",
+      "Full Stack",
+      "Business"
+    ],
+    "priority": "high",
+    "featured": true,
+    "previewType": "image",
+    "preview": "",
+    "github": "https://github.com/mohdsaadkhan073",
+    "live": "https://hajiclothstore.com",
+    "readme": "/readmes/dummy.md",
+    "technologies": [
+      "React",
+      "Node.js",
+      "Tailwind CSS",
+      "SQL",
+      "Docker"
+    ]
+  },
+  {
+    "title": "Student Data Analysis",
+    "slug": "student-data-analysis",
+    "shortDescription": "Python Pandas project that processes CSV data and calculates statistics.",
+    "longDescription": "An advanced data pipeline built with Python and Pandas for analyzing large-scale student datasets. It performs rigorous filtering, anomaly detection, and statistical calculations to generate actionable insights into student performance metrics, complete with automated reporting.",
+    "features": [
+      "Automated CSV parsing and data cleaning",
+      "Statistical anomaly detection for grade anomalies",
+      "Automated PDF report generation",
+      "Interactive data visualization exports"
+    ],
+    "category": [
+      "AI",
+      "Systems",
+      "Experiments"
+    ],
+    "priority": "medium",
+    "featured": true,
+    "previewType": "image",
+    "preview": "",
+    "github": "https://github.com/mohdsaadkhan073",
+    "live": "",
+    "readme": "/readmes/dummy.md",
+    "technologies": [
+      "Python",
+      "Pandas",
+      "Data Science",
+      "Analytics"
+    ]
+  },
+  {
+    "title": "Content Creation Workflow",
+    "slug": "content-creation-workflow",
+    "shortDescription": "A structured workflow for recording, managing, and publishing digital content.",
+    "longDescription": "A comprehensive system designed to streamline the entire digital content lifecycle. From initial recording to final publication, this workflow architecture integrates multiple tools into a unified pipeline, reducing friction and maximizing creative output.",
+    "features": [
+      "Automated file ingestion and metadata tagging",
+      "Video rendering pipeline integration",
+      "Multi-platform auto-publishing scripts"
+    ],
+    "category": [
+      "Automation",
+      "Tools",
+      "Systems"
+    ],
+    "priority": "medium",
+    "featured": true,
+    "previewType": "image",
+    "preview": "",
+    "github": "https://github.com/mohdsaadkhan073",
+    "live": "",
+    "readme": "/readmes/dummy.md",
+    "technologies": [
+      "Workflow",
+      "System Design",
+      "Automation"
+    ]
+  },
+  {
+    "title": "Career Buddy Platform",
+    "slug": "career-buddy",
+    "shortDescription": "A web platform designed to help users explore career options and resources.",
+    "longDescription": "Career Buddy is an interactive web platform aimed at guiding individuals through career exploration. It features dynamic skill assessments, personalized resource recommendations, and an intuitive user interface to help map out professional journeys.",
+    "features": [
+      "Dynamic skill assessments",
+      "Personalized resource recommendations",
+      "Interactive user interface",
+      "Database integration for user profiles"
+    ],
+    "category": [
+      "Web",
+      "Full Stack"
+    ],
+    "priority": "medium",
+    "featured": true,
+    "previewType": "image",
+    "preview": "",
+    "github": "https://github.com/mohdsaadkhan073",
+    "live": "",
+    "readme": "/readmes/dummy.md",
+    "technologies": [
+      "React",
+      "TypeScript",
+      "Tailwind CSS",
+      "Node.js"
+    ]
+  },
+  {
+    "title": "Quantum Algorithm Simulator",
+    "slug": "quantum-algo-simulator",
+    "shortDescription": "Experimental simulator for quantum algorithms and logic gates.",
+    "longDescription": "An experimental project focused on visualizing and simulating fundamental quantum computing algorithms. It provides a visual interface for constructing quantum circuits and observing state vectors in real-time.",
+    "features": [
+      "Visual interface for constructing quantum circuits",
+      "Real-time state vector observation",
+      "Simulation of fundamental quantum algorithms"
+    ],
+    "category": [
+      "Experiments",
+      "Systems"
+    ],
+    "priority": "low",
+    "featured": true,
+    "previewType": "image",
+    "preview": "",
+    "github": "",
+    "live": "",
+    "readme": "/readmes/dummy.md",
+    "technologies": [
+      "Python",
+      "Simulation",
+      "Mathematics"
+    ]
+  }
+]

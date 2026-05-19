@@ -10,6 +10,10 @@ const CustomCursor = () => {
   const hasMoved = useRef(false);
 
   useEffect(() => {
+    // Disable custom cursor on mobile/touch devices
+    const isMobile = window.innerWidth < 768 || 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+    if (isMobile) return;
+
     const canvas = canvasRef.current;
     const outer = outerRef.current;
     const dot = dotRef.current;

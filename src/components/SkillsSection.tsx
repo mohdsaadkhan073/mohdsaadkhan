@@ -2,27 +2,33 @@ import React, { useEffect, useRef, useState } from 'react';
 import Matter from 'matter-js';
 import { motion, useInView } from 'framer-motion';
 
+import { 
+  Atom, Triangle, FileCode2, Code2, BrainCircuit, Network, Layout,
+  Server, FileCode, Coffee, Palette, Activity, Box, TerminalSquare, 
+  Globe, Brush, Bot, Github, Lightbulb
+} from 'lucide-react';
+
 const SKILLS = [
-  { text: 'React', size: 'large', color: 'hsl(186,90%,50%)' },
-  { text: 'Next.js', size: 'large', color: 'hsl(0,0%,100%)' },
-  { text: 'Python', size: 'large', color: 'hsl(45,90%,50%)' },
-  { text: 'TypeScript', size: 'large', color: 'hsl(215,90%,60%)' },
-  { text: 'AI', size: 'medium-large', color: 'hsl(330,90%,60%)' },
-  { text: 'System Design', size: 'medium-large', color: 'hsl(270,70%,65%)' },
-  { text: 'Web Dev', size: 'medium-large', color: 'hsl(150,80%,50%)' },
-  { text: 'JavaScript', size: 'medium', color: 'hsl(45,90%,50%)' },
-  { text: 'Node.js', size: 'medium', color: 'hsl(120,60%,50%)' },
-  { text: 'C++', size: 'medium', color: 'hsl(210,80%,50%)' },
-  { text: 'Java', size: 'medium', color: 'hsl(15,80%,50%)' },
-  { text: 'Tailwind CSS', size: 'medium', color: 'hsl(195,90%,50%)' },
-  { text: 'Framer Motion', size: 'medium', color: 'hsl(300,80%,50%)' },
-  { text: 'Three.js', size: 'medium', color: 'hsl(0,0%,90%)' },
-  { text: 'C', size: 'small', color: 'hsl(210,80%,40%)' },
-  { text: 'HTML', size: 'small', color: 'hsl(15,90%,50%)' },
-  { text: 'CSS', size: 'small', color: 'hsl(210,90%,50%)' },
-  { text: 'Automation', size: 'large', color: 'hsl(270,70%,65%)' },
-  { text: 'GitHub', size: 'small', color: 'hsl(0,0%,90%)' },
-  { text: 'Problem Solving', size: 'small', color: 'hsl(330,90%,60%)' },
+  { text: 'React', size: 'large', color: 'hsl(186,90%,50%)', icon: Atom },
+  { text: 'Next.js', size: 'large', color: 'hsl(0,0%,100%)', icon: Triangle },
+  { text: 'Python', size: 'large', color: 'hsl(45,90%,50%)', icon: FileCode2 },
+  { text: 'TypeScript', size: 'large', color: 'hsl(215,90%,60%)', icon: FileCode },
+  { text: 'AI', size: 'medium-large', color: 'hsl(330,90%,60%)', icon: BrainCircuit },
+  { text: 'System Design', size: 'medium-large', color: 'hsl(270,70%,65%)', icon: Network },
+  { text: 'Web Dev', size: 'medium-large', color: 'hsl(150,80%,50%)', icon: Layout },
+  { text: 'JavaScript', size: 'medium', color: 'hsl(45,90%,50%)', icon: Code2 },
+  { text: 'Node.js', size: 'medium', color: 'hsl(120,60%,50%)', icon: Server },
+  { text: 'C++', size: 'medium', color: 'hsl(210,80%,50%)', icon: TerminalSquare },
+  { text: 'Java', size: 'medium', color: 'hsl(15,80%,50%)', icon: Coffee },
+  { text: 'Tailwind CSS', size: 'medium', color: 'hsl(195,90%,50%)', icon: Palette },
+  { text: 'Framer Motion', size: 'medium', color: 'hsl(300,80%,50%)', icon: Activity },
+  { text: 'Three.js', size: 'medium', color: 'hsl(0,0%,90%)', icon: Box },
+  { text: 'C', size: 'small', color: 'hsl(210,80%,40%)', icon: TerminalSquare },
+  { text: 'HTML', size: 'small', color: 'hsl(15,90%,50%)', icon: Globe },
+  { text: 'CSS', size: 'small', color: 'hsl(210,90%,50%)', icon: Brush },
+  { text: 'Automation', size: 'large', color: 'hsl(270,70%,65%)', icon: Bot },
+  { text: 'GitHub', size: 'small', color: 'hsl(0,0%,90%)', icon: Github },
+  { text: 'Problem Solving', size: 'small', color: 'hsl(330,90%,60%)', icon: Lightbulb },
 ];
 
 const getSize = (sizeCat: string, width: number, totalSkills: number) => {
@@ -123,9 +129,21 @@ const SkillsSection = () => {
     window.addEventListener('pointermove', handlePointerMove);
     window.addEventListener('pointerup', handlePointerUp);
 
-    // 5. Ambient Micro-Movement
+    // 5. Physics Constraints & Ambient Micro-Movement
     Matter.Events.on(engine, 'beforeUpdate', () => {
       bodies.forEach(body => {
+        // --- 1. Rotation Limits (Prevent upside-down text) ---
+        // Clamp the angle between -90 and +90 degrees (-PI/2 to PI/2)
+        const maxAngle = Math.PI / 2.2; // Slightly less than 90 degrees for readability
+        if (body.angle > maxAngle) {
+          Matter.Body.setAngle(body, maxAngle);
+          Matter.Body.setAngularVelocity(body, 0);
+        } else if (body.angle < -maxAngle) {
+          Matter.Body.setAngle(body, -maxAngle);
+          Matter.Body.setAngularVelocity(body, 0);
+        }
+
+        // --- 2. Ambient Micro-Movement ---
         // Only apply force occasionally to bubbles that are nearly still
         if (body.speed < 1 && Math.random() < 0.05) {
           Matter.Sleeping.set(body, false);
@@ -270,15 +288,24 @@ const SkillsSection = () => {
                     Matter.World.add(engineRef.current.world, dragConstraintRef.current);
                   }}
                 >
-                  <span 
-                    className="text-center px-2 pointer-events-none"
-                    style={{ 
-                      fontSize: `${Math.max(0.75, radius * 0.022)}rem`,
-                      lineHeight: '1.2'
-                    }}
-                  >
-                    {skill.text}
-                  </span>
+                  <div className="flex flex-col items-center justify-center pointer-events-none gap-1">
+                    {skill.icon && (
+                      <skill.icon 
+                        size={Math.max(16, radius * 0.45)} 
+                        color={skill.color} 
+                        strokeWidth={1.5} 
+                      />
+                    )}
+                    <span 
+                      className="text-center px-2"
+                      style={{ 
+                        fontSize: `${Math.max(0.65, radius * 0.02)}rem`,
+                        lineHeight: '1.1'
+                      }}
+                    >
+                      {skill.text}
+                    </span>
+                  </div>
                 </div>
               );
             })}

@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import Matter from 'matter-js';
+import type { Engine, Body, Constraint } from 'matter-js';
 import { motion, useInView } from 'framer-motion';
 
 import { 
@@ -72,13 +72,15 @@ const getSize = (sizeCat: string, width: number, totalSkills: number) => {
 
 const SkillsSection = () => {
   const containerRef = useRef<HTMLDivElement>(null);
-  const engineRef = useRef<Matter.Engine | null>(null);
+  const engineRef = useRef<Engine | null>(null);
   const bubbleRefs = useRef<(HTMLDivElement | null)[]>([]);
-  const bodiesRef = useRef<Matter.Body[]>([]);
-  const dragConstraintRef = useRef<Matter.Constraint | null>(null);
+  const bodiesRef = useRef<Body[]>([]);
+  const dragConstraintRef = useRef<Constraint | null>(null);
   const sectionRef = useRef<HTMLDivElement>(null);
   const inView = useInView(sectionRef, { once: true, margin: '-100px' });
   const [hasStarted, setHasStarted] = useState(false);
+  const matterLibRef = useRef<any>(null);
+  const cleanupRef = useRef<(() => void) | null>(null);
 
   useEffect(() => {
     if (!inView || !containerRef.current) return;
@@ -88,138 +90,149 @@ const SkillsSection = () => {
     const width = container.clientWidth;
     const height = container.clientHeight;
 
-    // 1. Setup Matter.js Engine
-    const engine = Matter.Engine.create({
-      enableSleeping: true,
-    });
-    engineRef.current = engine;
-    
-    // Physics tweaks
-    engine.world.gravity.y = 0.5; // Natural gravity
+    let active = true;
 
-    // 2. Setup Boundaries
-    const wallOptions = { 
-      isStatic: true,
-      restitution: 0.5,
-      friction: 0.1,
-      render: { visible: false }
-    };
-    
-    const ground = Matter.Bodies.rectangle(width / 2, height + 50, width * 2, 100, wallOptions);
-    const leftWall = Matter.Bodies.rectangle(-50, height / 2, 100, height * 2, wallOptions);
-    const rightWall = Matter.Bodies.rectangle(width + 50, height / 2, 100, height * 2, wallOptions);
-    const ceiling = Matter.Bodies.rectangle(width / 2, -2000, width * 2, 100, wallOptions); // High ceiling
-    
-    Matter.World.add(engine.world, [ground, leftWall, rightWall, ceiling]);
+    import('matter-js').then((Matter) => {
+      if (!active || !containerRef.current) return;
+      matterLibRef.current = Matter;
 
-    // 3. Create Bubbles
-    const bodies = SKILLS.map((skill, index) => {
-      const radius = getSize(skill.size, width, SKILLS.length);
-      // Stagger start positions safely below the ceiling
-      const startX = Math.max(radius, Math.min(width - radius, Math.random() * width));
-      const startY = -100 - (Math.random() * 300) - (index * 30); 
+      // 1. Setup Matter.js Engine
+      const engine = Matter.Engine.create({
+        enableSleeping: true,
+      });
+      engineRef.current = engine;
       
-      return Matter.Bodies.circle(startX, startY, radius, {
-        restitution: 0.8, // Bouncier
+      // Physics tweaks
+      engine.world.gravity.y = 0.5; // Natural gravity
+
+      // 2. Setup Boundaries
+      const wallOptions = { 
+        isStatic: true,
+        restitution: 0.5,
         friction: 0.1,
-        frictionAir: 0.005, // Less air resistance for more liveliness
-        density: 0.04,
-        label: skill.text,
-        sleepThreshold: 120, // Sleep less easily
-      });
-    });
-
-    Matter.World.add(engine.world, bodies);
-    bodiesRef.current = bodies;
-
-    // 4. Custom Drag Logic to prevent scroll hijacking
-    const handlePointerMove = (e: PointerEvent) => {
-      if (dragConstraintRef.current && containerRef.current) {
-        const rect = containerRef.current.getBoundingClientRect();
-        dragConstraintRef.current.pointA = {
-          x: e.clientX - rect.left,
-          y: e.clientY - rect.top,
-        };
-      }
-    };
-
-    const handlePointerUp = () => {
-      if (dragConstraintRef.current && engineRef.current) {
-        Matter.World.remove(engineRef.current.world, dragConstraintRef.current);
-        dragConstraintRef.current = null;
-      }
-    };
-
-    window.addEventListener('pointermove', handlePointerMove);
-    window.addEventListener('pointerup', handlePointerUp);
-
-    // 5. Physics Constraints & Ambient Micro-Movement
-    Matter.Events.on(engine, 'beforeUpdate', () => {
-      bodies.forEach(body => {
-        // --- 1. Rotation Limits (Prevent upside-down text) ---
-        // Clamp the angle between -90 and +90 degrees (-PI/2 to PI/2)
-        const maxAngle = Math.PI / 2.2; // Slightly less than 90 degrees for readability
-        if (body.angle > maxAngle) {
-          Matter.Body.setAngle(body, maxAngle);
-          Matter.Body.setAngularVelocity(body, 0);
-        } else if (body.angle < -maxAngle) {
-          Matter.Body.setAngle(body, -maxAngle);
-          Matter.Body.setAngularVelocity(body, 0);
-        }
-
-        // --- 2. Ambient Micro-Movement ---
-        // Only apply force occasionally to bubbles that are nearly still
-        if (body.speed < 1 && Math.random() < 0.05) {
-          Matter.Sleeping.set(body, false);
-          Matter.Body.applyForce(body, body.position, {
-            x: (Math.random() - 0.5) * 0.005 * body.mass,
-            y: (Math.random() - 0.5) * 0.005 * body.mass
-          });
-        }
-      });
-    });
-
-    // 6. Run Physics and Sync DOM
-    const runner = Matter.Runner.create();
-    Matter.Runner.run(runner, engine);
-
-    let animationFrameId: number;
-
-    const updateDOM = () => {
-      bodies.forEach((body, index) => {
-        const domNode = bubbleRefs.current[index];
-        if (domNode) {
-          // Using strict translation to match Matter.js coordinates
-          // Matter.js body.position is the center of the circle
-          domNode.style.transform = `translate(${body.position.x - domNode.offsetWidth / 2}px, ${body.position.y - domNode.offsetHeight / 2}px) rotate(${body.angle}rad)`;
-        }
-      });
-      animationFrameId = requestAnimationFrame(updateDOM);
-    };
-    
-    updateDOM();
-
-    // 7. Handle Resize dynamically
-    const handleResize = () => {
-      if (!containerRef.current) return;
-      const newWidth = containerRef.current.clientWidth;
-      const newHeight = containerRef.current.clientHeight;
+        render: { visible: false }
+      };
       
-      // Update walls
-      Matter.Body.setPosition(ground, { x: newWidth / 2, y: newHeight + 50 });
-      Matter.Body.setPosition(rightWall, { x: newWidth + 50, y: newHeight / 2 });
-    };
+      const ground = Matter.Bodies.rectangle(width / 2, height + 50, width * 2, 100, wallOptions);
+      const leftWall = Matter.Bodies.rectangle(-50, height / 2, 100, height * 2, wallOptions);
+      const rightWall = Matter.Bodies.rectangle(width + 50, height / 2, 100, height * 2, wallOptions);
+      const ceiling = Matter.Bodies.rectangle(width / 2, -2000, width * 2, 100, wallOptions); // High ceiling
+      
+      Matter.World.add(engine.world, [ground, leftWall, rightWall, ceiling]);
 
-    window.addEventListener('resize', handleResize);
+      // 3. Create Bubbles
+      const bodies = SKILLS.map((skill, index) => {
+        const radius = getSize(skill.size, width, SKILLS.length);
+        // Stagger start positions safely below the ceiling
+        const startX = Math.max(radius, Math.min(width - radius, Math.random() * width));
+        const startY = -100 - (Math.random() * 300) - (index * 30); 
+        
+        return Matter.Bodies.circle(startX, startY, radius, {
+          restitution: 0.8, // Bouncier
+          friction: 0.1,
+          frictionAir: 0.005, // Less air resistance for more liveliness
+          density: 0.04,
+          label: skill.text,
+          sleepThreshold: 120, // Sleep less easily
+        });
+      });
+
+      Matter.World.add(engine.world, bodies);
+      bodiesRef.current = bodies;
+
+      // 4. Custom Drag Logic to prevent scroll hijacking
+      const handlePointerMove = (e: PointerEvent) => {
+        if (dragConstraintRef.current && containerRef.current) {
+          const rect = containerRef.current.getBoundingClientRect();
+          dragConstraintRef.current.pointA = {
+            x: e.clientX - rect.left,
+            y: e.clientY - rect.top,
+          };
+        }
+      };
+
+      const handlePointerUp = () => {
+        if (dragConstraintRef.current && engineRef.current) {
+          Matter.World.remove(engineRef.current.world, dragConstraintRef.current);
+          dragConstraintRef.current = null;
+        }
+      };
+
+      window.addEventListener('pointermove', handlePointerMove);
+      window.addEventListener('pointerup', handlePointerUp);
+
+      // 5. Physics Constraints & Ambient Micro-Movement
+      Matter.Events.on(engine, 'beforeUpdate', () => {
+        bodies.forEach(body => {
+          // --- 1. Rotation Limits (Prevent upside-down text) ---
+          const maxAngle = Math.PI / 2.2; // Slightly less than 90 degrees for readability
+          if (body.angle > maxAngle) {
+            Matter.Body.setAngle(body, maxAngle);
+            Matter.Body.setAngularVelocity(body, 0);
+          } else if (body.angle < -maxAngle) {
+            Matter.Body.setAngle(body, -maxAngle);
+            Matter.Body.setAngularVelocity(body, 0);
+          }
+
+          // --- 2. Ambient Micro-Movement ---
+          if (body.speed < 1 && Math.random() < 0.05) {
+            Matter.Sleeping.set(body, false);
+            Matter.Body.applyForce(body, body.position, {
+              x: (Math.random() - 0.5) * 0.005 * body.mass,
+              y: (Math.random() - 0.5) * 0.005 * body.mass
+            });
+          }
+        });
+      });
+
+      // 6. Run Physics and Sync DOM
+      const runner = Matter.Runner.create();
+      Matter.Runner.run(runner, engine);
+
+      let animationFrameId: number;
+
+      const updateDOM = () => {
+        if (!active) return;
+        bodies.forEach((body, index) => {
+          const domNode = bubbleRefs.current[index];
+          if (domNode) {
+            domNode.style.transform = `translate(${body.position.x - domNode.offsetWidth / 2}px, ${body.position.y - domNode.offsetHeight / 2}px) rotate(${body.angle}rad)`;
+          }
+        });
+        animationFrameId = requestAnimationFrame(updateDOM);
+      };
+      
+      updateDOM();
+
+      // 7. Handle Resize dynamically
+      const handleResize = () => {
+        if (!containerRef.current) return;
+        const newWidth = containerRef.current.clientWidth;
+        const newHeight = containerRef.current.clientHeight;
+        
+        // Update walls
+        Matter.Body.setPosition(ground, { x: newWidth / 2, y: newHeight + 50 });
+        Matter.Body.setPosition(rightWall, { x: newWidth + 50, y: newHeight / 2 });
+      };
+
+      window.addEventListener('resize', handleResize);
+
+      cleanupRef.current = () => {
+        window.removeEventListener('pointermove', handlePointerMove);
+        window.removeEventListener('pointerup', handlePointerUp);
+        window.removeEventListener('resize', handleResize);
+        Matter.Runner.stop(runner);
+        Matter.Engine.clear(engine);
+        Matter.World.clear(engine.world, false);
+        cancelAnimationFrame(animationFrameId);
+      };
+    });
 
     return () => {
-      window.removeEventListener('pointermove', handlePointerMove);
-      window.removeEventListener('pointerup', handlePointerUp);
-      window.removeEventListener('resize', handleResize);
-      Matter.Runner.stop(runner);
-      Matter.Engine.clear(engine);
-      Matter.World.clear(engine.world, false);
-      cancelAnimationFrame(animationFrameId);
+      active = false;
+      if (cleanupRef.current) {
+        cleanupRef.current();
+      }
     };
   }, [inView]);
 
@@ -284,7 +297,8 @@ const SkillsSection = () => {
                     e.currentTarget.style.borderColor = `${skill.color}80`;
                   }}
                   onPointerDown={(e) => {
-                    if (!engineRef.current || !containerRef.current) return;
+                    const MatterInstance = matterLibRef.current;
+                    if (!MatterInstance || !engineRef.current || !containerRef.current) return;
                     const body = bodiesRef.current[index];
                     if (!body) return;
                 
@@ -297,10 +311,10 @@ const SkillsSection = () => {
                     };
                 
                     if (dragConstraintRef.current) {
-                      Matter.World.remove(engineRef.current.world, dragConstraintRef.current);
+                      MatterInstance.World.remove(engineRef.current.world, dragConstraintRef.current);
                     }
                 
-                    dragConstraintRef.current = Matter.Constraint.create({
+                    dragConstraintRef.current = MatterInstance.Constraint.create({
                       pointA: point,
                       bodyB: body,
                       pointB: { x: 0, y: 0 },
@@ -309,7 +323,7 @@ const SkillsSection = () => {
                       render: { visible: false }
                     });
                 
-                    Matter.World.add(engineRef.current.world, dragConstraintRef.current);
+                    MatterInstance.World.add(engineRef.current.world, dragConstraintRef.current);
                   }}
                 >
                   <div className="flex flex-col items-center justify-center pointer-events-none gap-0.5" style={{ width: radius * 1.6, height: radius * 1.6 }}>

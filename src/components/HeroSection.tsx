@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { ArrowDown, ExternalLink, Mail, Download } from 'lucide-react';
 import RobotAvatar from './RobotAvatar';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 const phrases = [
   'Computer Engineering Student',
@@ -56,9 +57,23 @@ const HeroSection = () => {
   const [phraseIndex, setPhraseIndex] = useState(0);
   const [text, setText] = useState('');
   const [isDeleting, setIsDeleting] = useState(false);
+  const [shouldRenderSpline, setShouldRenderSpline] = useState(false);
+  const isMobile = useIsMobile();
 
   const ref = useRef(null);
   const inView = useInView(ref, { margin: '-100px' });
+
+  useEffect(() => {
+    // Delay loading the heavy 3D Spline scene until after initial paint
+    const timer = setTimeout(() => {
+      if ("requestIdleCallback" in window) {
+        (window as any).requestIdleCallback(() => setShouldRenderSpline(true));
+      } else {
+        setShouldRenderSpline(true);
+      }
+    }, 2500);
+    return () => clearTimeout(timer);
+  }, []);
 
   useEffect(() => {
     const current = phrases[phraseIndex];
@@ -80,7 +95,7 @@ const HeroSection = () => {
 
   return (
     <section className="min-h-screen flex items-center justify-center section-padding relative" id="hero" ref={ref}>
-      <RobotAvatar />
+      {!isMobile && shouldRenderSpline && <RobotAvatar />}
       <div className="max-w-7xl mx-auto w-full grid md:grid-cols-2 gap-12 items-center relative z-10 pointer-events-none">
         {/* Left */}
         <motion.div

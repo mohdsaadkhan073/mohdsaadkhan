@@ -1,11 +1,14 @@
+import React, { Suspense } from 'react';
 import { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Search, ArrowLeft, Filter } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import projectsData from '../data/projects.json';
-import { ProjectCard } from '../components/ProjectsSection';
-import { ProjectModal, ProjectData } from '../components/ProjectModal';
+import { ProjectCard } from '../components/ProjectCard';
+import type { ProjectData } from '../components/ProjectModal';
 import CustomCursor from '../components/CustomCursor';
+
+const ProjectModal = React.lazy(() => import('../components/ProjectModal').then(m => ({ default: m.ProjectModal })));
 
 const ALL_CATEGORIES = ['All', 'AI', 'Automation', 'Web', 'Systems', 'Tools', 'Experiments', 'Full Stack'];
 
@@ -143,11 +146,13 @@ const ProjectsPage = () => {
         </motion.div>
       </div>
 
-      <ProjectModal 
-        project={selectedProject} 
-        isOpen={!!selectedProject} 
-        onClose={() => setSelectedProject(null)} 
-      />
+      <Suspense fallback={null}>
+        <ProjectModal 
+          project={selectedProject} 
+          isOpen={!!selectedProject} 
+          onClose={() => setSelectedProject(null)} 
+        />
+      </Suspense>
     </div>
   );
 };

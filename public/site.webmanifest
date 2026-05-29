@@ -1,0 +1,16 @@
+{
+  "name": "Mohd Saad Khan | Developer Portfolio",
+  "short_name": "MSK Portfolio",
+  "description": "Portfolio of Mohd Saad Khan - Computer Engineering Student, Python Developer, and Automation Enthusiast.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#07070a",
+  "theme_color": "#07070a",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "64x64 32x32 24x24 16x16",
+      "type": "image/x-icon"
+    }
+  ]
+}

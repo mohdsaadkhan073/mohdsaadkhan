@@ -125,6 +125,10 @@
     filter: drop-shadow(0 0 20px hsl(var(--bright-purple) / 0.5));
   }
 
+  .text-gradient-name.animate-breathe {
+    animation: nameGradient 4s ease infinite, breathe 4s ease-in-out infinite;
+  }
+
   @keyframes nameGradient {
     0% { background-position: 0% 50%; }
     50% { background-position: 100% 50%; }

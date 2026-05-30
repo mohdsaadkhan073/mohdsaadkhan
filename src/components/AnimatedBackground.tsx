@@ -83,8 +83,9 @@ const AnimatedBackground = () => {
 
         const dx = mouse.x - p.x;
         const dy = mouse.y - p.y;
-        const dist = Math.sqrt(dx * dx + dy * dy);
-        if (dist < 250) {
+        const distSq = dx * dx + dy * dy;
+        if (distSq < 62500) { // 250 * 250
+          const dist = Math.sqrt(distSq);
           p.vx += dx * 0.00008;
           p.vy += dy * 0.00008;
           p.alpha = p.baseAlpha + (1 - dist / 250) * 0.3;
@@ -112,8 +113,9 @@ const AnimatedBackground = () => {
         for (let j = i + 1; j < particles.length; j++) {
           const dx = particles[i].x - particles[j].x;
           const dy = particles[i].y - particles[j].y;
-          const dist = Math.sqrt(dx * dx + dy * dy);
-          if (dist < 130) {
+          const distSq = dx * dx + dy * dy;
+          if (distSq < 16900) { // 130 * 130
+            const dist = Math.sqrt(distSq);
             const alpha = 0.08 * (1 - dist / 130);
             ctx.globalAlpha = alpha;
             ctx.strokeStyle = '#8B5CF6';

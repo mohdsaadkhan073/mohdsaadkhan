@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { useState } from 'react';
+import { motion, AnimatePresence, useScroll, useMotionValueEvent } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
 
 const navItems = [
@@ -12,19 +12,16 @@ const navItems = [
 ];
 
 const Navbar = () => {
-  const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [scrollProgress, setScrollProgress] = useState(0);
+  const [scrolled, setScrolled] = useState(false);
+  const { scrollY, scrollYProgress } = useScroll();
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 50);
-      const total = document.documentElement.scrollHeight - window.innerHeight;
-      setScrollProgress(total > 0 ? (window.scrollY / total) * 100 : 0);
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  useMotionValueEvent(scrollY, "change", (latest) => {
+    const isScrolled = latest > 50;
+    if (isScrolled !== scrolled) {
+      setScrolled(isScrolled);
+    }
+  });
 
   return (
     <>
@@ -69,10 +66,10 @@ const Navbar = () => {
         </div>
 
         {/* Scroll progress */}
-        <div className="h-0.5 bg-transparent">
+        <div className="h-0.5 bg-transparent w-full">
           <motion.div
-            className="h-full bg-gradient-primary"
-            style={{ width: `${scrollProgress}%` }}
+            className="h-full bg-gradient-primary origin-left w-full"
+            style={{ scaleX: scrollYProgress }}
           />
         </div>
       </motion.nav>

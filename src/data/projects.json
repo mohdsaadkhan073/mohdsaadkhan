@@ -56,8 +56,8 @@
     ],
     "priority": "high",
     "featured": true,
-    "previewType": "image",
-    "preview": "",
+    "previewType": "video",
+    "preview": "/videos/Haji Cloth Store.mp4",
     "github": "",
     "live": "https://hajiclothstore.com",
     "readme": "",
@@ -70,33 +70,39 @@
     ]
   },
   {
-    "title": "Student Data Analysis",
-    "slug": "student-data-analysis",
-    "shortDescription": "Python Pandas project that processes CSV data and calculates statistics.",
-    "longDescription": "An advanced data pipeline built with Python and Pandas for analyzing large-scale student datasets. It performs rigorous filtering, anomaly detection, and statistical calculations to generate actionable insights into student performance metrics, complete with automated reporting.",
+    "title": "LifeStack",
+    "slug": "lifestack",
+    "shortDescription": "A modern personal productivity dashboard for planning tasks, tracking focus, and staying organized.",
+    "longDescription": "LifeStack is a React and Vite-based productivity platform that helps users manage daily tasks, generate a simple day plan, and stay in deep work mode with a built-in focus timer. It combines drag-and-drop task organization, quick planning tools, lightweight analytics, and a polished dashboard experience into one clean personal workflow app.",
     "features": [
-      "Automated CSV parsing and data cleaning",
-      "Statistical anomaly detection for grade anomalies",
-      "Automated PDF report generation",
-      "Interactive data visualization exports"
+      "Task creation, completion tracking, and drag-and-drop reordering",
+      "Auto day planning with priority-based task scheduling and breaks",
+      "Built-in focus timer for deep work sessions",
+      "Dashboard analytics, progress tracking, and completed task history",
+      "Mock login flow with editable profile and preferences"
     ],
     "category": [
-      "AI",
-      "Systems",
-      "Experiments"
+      "Web",
+      "Productivity",
+      "Task Management",
+      "Personal Development"
     ],
-    "priority": "medium",
+    "priority": "high",
     "featured": true,
-    "previewType": "image",
-    "preview": "",
-    "github": "https://github.com/mohdsaadkhan073",
-    "live": "",
-    "readme": "/readmes/dummy.md",
+    "previewType": "video",
+    "preview": "/videos/LifeStack.mp4",
+    "github": "https://github.com/mohdsaadkhan073/LifeStack.git",
+    "live": "https://life-stack-ten.vercel.app/",
+    "readme": "/readmes/LifeStack.md",
     "technologies": [
-      "Python",
-      "Pandas",
-      "Data Science",
-      "Analytics"
+      "React",
+      "Vite",
+      "JavaScript",
+      "Tailwind CSS",
+      "Framer Motion",
+      "@dnd-kit",
+      "Lucide React",
+      "Vercel"
     ]
   },
   {
@@ -130,30 +136,33 @@
   {
     "title": "Career Buddy Platform",
     "slug": "career-buddy",
-    "shortDescription": "A web platform designed to help users explore career options and resources.",
-    "longDescription": "Career Buddy is an interactive web platform aimed at guiding individuals through career exploration. It features dynamic skill assessments, personalized resource recommendations, and an intuitive user interface to help map out professional journeys.",
+    "shortDescription": "An evolving career guidance product that helps users discover career paths, skills, colleges, and jobs.",
+    "longDescription": "Career Buddy is a growing web product built to guide students and professionals through meaningful career decisions. It combines interactive assessments, curated career and education resources, and a conversational assistant within a modern frontend experience that is actively developed and improving over time.",
     "features": [
-      "Dynamic skill assessments",
-      "Personalized resource recommendations",
-      "Interactive user interface",
-      "Database integration for user profiles"
+      "Career path discovery and skills matching",
+      "Curated career, college, job, scholarship, and exam resources",
+      "Interactive quiz and personalized recommendation flow",
+      "Modular shared UI components for rapid feature updates"
     ],
     "category": [
       "Web",
-      "Full Stack"
+      "Product",
+      "Education",
+      "Career Guidance",
+      "Career"
     ],
-    "priority": "medium",
+    "priority": "high",
     "featured": true,
-    "previewType": "image",
-    "preview": "",
-    "github": "https://github.com/mohdsaadkhan073",
-    "live": "",
-    "readme": "/readmes/dummy.md",
+    "previewType": "video",
+    "preview": "/videos/Career Buddy.mp4",
+    "github": "https://github.com/mohdsaadkhan073/CareerBuddy.git",
+    "live": "https://career-buddy-ten.vercel.app",
+    "readme": "/readmes/Career Buddy.md",
     "technologies": [
-      "React",
-      "TypeScript",
-      "Tailwind CSS",
-      "Node.js"
+      "HTML",
+      "CSS",
+      "JavaScript",
+      "Vercel"
     ]
   },
   {

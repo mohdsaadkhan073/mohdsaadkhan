@@ -32,12 +32,15 @@ const DEFAULT_PREVIEW_IMAGE = "/project-placeholder.png";
 export const ProjectModal = ({ project, isOpen, onClose }: ProjectModalProps) => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isReadmeOpen, setIsReadmeOpen] = useState(false);
+  const [isVideoFullscreen, setIsVideoFullscreen] = useState(false);
   const [readmeContent, setReadmeContent] = useState<string>('');
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
-        if (isReadmeOpen) {
+        if (isVideoFullscreen) {
+          setIsVideoFullscreen(false);
+        } else if (isReadmeOpen) {
           setIsReadmeOpen(false);
         } else {
           onClose();
@@ -59,7 +62,7 @@ export const ProjectModal = ({ project, isOpen, onClose }: ProjectModalProps) =>
       document.body.classList.remove('modal-open');
       window.removeEventListener('keydown', handleKeyDown);
     };
-  }, [isOpen, onClose, isReadmeOpen]);
+  }, [isOpen, onClose, isReadmeOpen, isVideoFullscreen]);
 
   // Fetch README content when opening overlay
   useEffect(() => {
@@ -77,11 +80,7 @@ export const ProjectModal = ({ project, isOpen, onClose }: ProjectModalProps) =>
   if (!project) return null;
 
   const toggleFullScreen = () => {
-    if (videoRef.current) {
-      if (videoRef.current.requestFullscreen) {
-        videoRef.current.requestFullscreen();
-      }
-    }
+    setIsVideoFullscreen(true);
   };
 
   const previewSource = project.preview || DEFAULT_PREVIEW_IMAGE;
@@ -117,7 +116,7 @@ export const ProjectModal = ({ project, isOpen, onClose }: ProjectModalProps) =>
               </button>
 
               {/* Left Side: Media Preview */}
-              <div className="w-full md:w-1/2 h-64 md:h-auto relative bg-[#111] flex-shrink-0 group">
+              <div className="w-full md:w-1/2 h-64 md:h-auto relative bg-[#111] flex-shrink-0 group flex items-center justify-center overflow-hidden">
                 {project.previewType === 'video' && project.preview ? (
                   <>
                     <video 
@@ -127,7 +126,7 @@ export const ProjectModal = ({ project, isOpen, onClose }: ProjectModalProps) =>
                       muted 
                       loop 
                       playsInline
-                      className="w-full h-full object-cover"
+                      className="w-full h-full object-contain"
                     />
                     <button 
                       onClick={toggleFullScreen}
@@ -299,6 +298,46 @@ export const ProjectModal = ({ project, isOpen, onClose }: ProjectModalProps) =>
                       </div>
                     )}
                   </div>
+                </motion.div>
+              </div>
+            )}
+          </AnimatePresence>
+
+          {/* Fullscreen Video Overlay */}
+          <AnimatePresence>
+            {isVideoFullscreen && (
+              <div className="fixed inset-0 z-[120] flex items-center justify-center p-4 sm:p-6 md:p-10">
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  onClick={() => setIsVideoFullscreen(false)}
+                  className="absolute inset-0 bg-black/95 backdrop-blur-md cursor-zoom-out"
+                />
+                
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.95 }}
+                  className="relative z-10 max-w-full max-h-full flex items-center justify-center"
+                >
+                  <video 
+                    src={project.preview} 
+                    autoPlay 
+                    muted 
+                    loop 
+                    playsInline
+                    className="max-w-[90vw] max-h-[90vh] object-contain rounded-lg shadow-2xl"
+                    style={{ width: 'auto', height: 'auto' }}
+                  />
+                  
+                  <button
+                    onClick={() => setIsVideoFullscreen(false)}
+                    className="absolute -top-12 right-0 p-2 rounded-full hover:bg-white/10 text-white/70 hover:text-white transition-colors"
+                    title="Exit Fullscreen"
+                  >
+                    <X size={24} />
+                  </button>
                 </motion.div>
               </div>
             )}

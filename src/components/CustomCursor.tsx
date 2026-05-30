@@ -8,6 +8,8 @@ const CustomCursor = () => {
   const outerPos = useRef({ x: 0, y: 0 });
   const hovering = useRef(false);
   const hasMoved = useRef(false);
+  const lastEmitPos = useRef({ x: 0, y: 0 });
+  const heroCoords = useRef<{ top: number; bottom: number } | null>(null);
 
   useEffect(() => {
     // Disable custom cursor on mobile/touch devices
@@ -22,9 +24,25 @@ const CustomCursor = () => {
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
+    // Cache hero section absolute coordinates relative to document
+    const updateHeroCoords = () => {
+      const heroEl = document.getElementById('hero');
+      if (heroEl) {
+        const rect = heroEl.getBoundingClientRect();
+        const scrollY = window.scrollY || window.pageYOffset;
+        heroCoords.current = {
+          top: rect.top + scrollY,
+          bottom: rect.bottom + scrollY,
+        };
+      } else {
+        heroCoords.current = null;
+      }
+    };
+
     const resize = () => {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
+      updateHeroCoords();
     };
     resize();
 
@@ -43,30 +61,41 @@ const CustomCursor = () => {
       mousePos.current.x = e.clientX;
       mousePos.current.y = e.clientY;
 
-      // Add trail particles (multiple per move for more intensity)
-      for (let j = 0; j < 3; j++) {
-        trail.push({
-          x: e.clientX + (Math.random() - 0.5) * 10,
-          y: e.clientY + (Math.random() - 0.5) * 10,
-          alpha: 0.4 + Math.random() * 0.3,
-          size: 1.5 + Math.random() * 1.5,
-          color: colors[Math.floor(Math.random() * colors.length)],
-        });
-      }
-      if (trail.length > 50) trail.splice(0, trail.length - 50);
+      const dx = e.clientX - lastEmitPos.current.x;
+      const dy = e.clientY - lastEmitPos.current.y;
+      const distSq = dx * dx + dy * dy;
 
-      // Hero lingering particles
-      const heroEl = document.getElementById('hero');
-      if (heroEl) {
-        const rect = heroEl.getBoundingClientRect();
-        if (e.clientY >= rect.top && e.clientY <= rect.bottom) {
+      // Only emit trail particles if moved at least 5px to avoid overhead
+      if (distSq > 25) {
+        lastEmitPos.current.x = e.clientX;
+        lastEmitPos.current.y = e.clientY;
+
+        for (let j = 0; j < 2; j++) {
           trail.push({
-            x: e.clientX + (Math.random() - 0.5) * 8,
-            y: e.clientY + (Math.random() - 0.5) * 8,
-            alpha: 0.6,
-            size: 2.5,
+            x: e.clientX + (Math.random() - 0.5) * 10,
+            y: e.clientY + (Math.random() - 0.5) * 10,
+            alpha: 0.4 + Math.random() * 0.3,
+            size: 1.5 + Math.random() * 1.5,
             color: colors[Math.floor(Math.random() * colors.length)],
           });
+        }
+        if (trail.length > 40) trail.splice(0, trail.length - 40);
+
+        // Hero lingering particles - use cached offset to prevent layout thrashing
+        if (!heroCoords.current) {
+          updateHeroCoords();
+        }
+        if (heroCoords.current) {
+          const mouseDocY = e.clientY + window.scrollY;
+          if (mouseDocY >= heroCoords.current.top && mouseDocY <= heroCoords.current.bottom) {
+            trail.push({
+              x: e.clientX + (Math.random() - 0.5) * 8,
+              y: e.clientY + (Math.random() - 0.5) * 8,
+              alpha: 0.6,
+              size: 2.5,
+              color: colors[Math.floor(Math.random() * colors.length)],
+            });
+          }
         }
       }
     };
@@ -96,9 +125,9 @@ const CustomCursor = () => {
 
     let raf: number;
     const loop = () => {
-      // Smooth outer follow
-      outerPos.current.x += (mousePos.current.x - outerPos.current.x) * 0.15;
-      outerPos.current.y += (mousePos.current.y - outerPos.current.y) * 0.15;
+      // Smooth outer follow (increased easing speed from 0.15 to 0.35 for a much more responsive feel)
+      outerPos.current.x += (mousePos.current.x - outerPos.current.x) * 0.35;
+      outerPos.current.y += (mousePos.current.y - outerPos.current.y) * 0.35;
 
       const scale = hovering.current ? 1.8 : 1;
       const borderColor = hovering.current ? 'hsla(330,90%,60%,0.6)' : 'hsla(270,70%,65%,0.5)';

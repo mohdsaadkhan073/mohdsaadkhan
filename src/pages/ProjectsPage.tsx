@@ -1,5 +1,5 @@
 import React, { Suspense } from 'react';
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Search, ArrowLeft, Filter } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -13,6 +13,10 @@ const ProjectModal = React.lazy(() => import('../components/ProjectModal').then(
 const ALL_CATEGORIES = ['All', 'AI', 'Automation', 'Web', 'Systems', 'Tools', 'Experiments', 'Full Stack'];
 
 const ProjectsPage = () => {
+  useEffect(() => {
+    document.title = "Project Archive | Mohd Saad Khan";
+  }, []);
+
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [selectedProject, setSelectedProject] = useState<ProjectData | null>(null);

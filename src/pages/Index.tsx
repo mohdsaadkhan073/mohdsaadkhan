@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react';
+import React, { Suspense, useEffect } from 'react';
 import CustomCursor from '@/components/CustomCursor';
 import AnimatedBackground from '@/components/AnimatedBackground';
 import Navbar from '@/components/Navbar';
@@ -22,6 +22,10 @@ const SectionFallback = () => (
 );
 
 const Index = () => {
+  useEffect(() => {
+    document.title = "Mohd Saad Khan | Developer Portfolio";
+  }, []);
+
   return (
     <div className="relative min-h-screen bg-background overflow-hidden">
       <CustomCursor />

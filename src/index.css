@@ -129,6 +129,14 @@
     animation: nameGradient 4s ease infinite, breathe 4s ease-in-out infinite;
   }
 
+  /* Hide fixed navbar when modals/overlays are open */
+  body.modal-open nav,
+  body[data-scroll-locked] nav {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-100%) !important;
+  }
+
   @keyframes nameGradient {
     0% { background-position: 0% 50%; }
     50% { background-position: 100% 50%; }

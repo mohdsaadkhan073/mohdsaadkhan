@@ -2,13 +2,17 @@
   {
     "title": "Jarvis Desktop Assistant",
     "slug": "jarvis-desktop-assistant",
-    "shortDescription": "Voice-controlled automation assistant capable of executing system commands.",
-    "longDescription": "A sophisticated voice-activated desktop assistant built with Python. It leverages speech recognition and natural language processing to execute system commands, automate daily workflows, manage applications, and interact seamlessly with the operating system environment. Features include context-aware responses and intelligent task delegation.",
+    "shortDescription": "Voice-controlled Windows automation assistant that opens apps, answers commands, and supports local AI responses.",
+    "longDescription": "A Python-based desktop assistant designed for Windows automation. It listens for wake words, captures speech through SpeechRecognition, converts responses to voice with pyttsx3, and uses keyboard/system automation to launch applications and handle basic desktop actions. The assistant also connects to a local LLM workflow through Ollama for AI-style replies, making it a lightweight voice-first productivity tool.",
     "features": [
-      "Voice activation and speech-to-text processing",
-      "Automated system control and application management",
-      "Context-aware NLP response generation",
-      "Customizable workflow automation scripts"
+      "Wake-word based voice interaction",
+      "Speech-to-text command recognition",
+      "Text-to-speech voice feedback",
+      "Application launch automation",
+      "Local AI response generation",
+      "Keyboard-driven desktop control",
+      "Stop-speech hotkey support",
+      "Windows-focused productivity workflow"
     ],
     "category": [
       "AI",
@@ -21,10 +25,15 @@
     "preview": "",
     "github": "https://github.com/mohdsaadkhan073",
     "live": "",
-    "readme": "/readmes/dummy.md",
+    "readme": "/readmes/JARVIS-DESKTOP-ASSISTANT.md",
     "technologies": [
       "Python",
       "SpeechRecognition",
+      "pyttsx3",
+      "keyboard",
+      "subprocess",
+      "Ollama / Llama3",
+      "PyAudio",
       "NLP",
       "Automation"
     ]
@@ -49,9 +58,9 @@
     "featured": true,
     "previewType": "image",
     "preview": "",
-    "github": "https://github.com/mohdsaadkhan073",
+    "github": "",
     "live": "https://hajiclothstore.com",
-    "readme": "/readmes/dummy.md",
+    "readme": "",
     "technologies": [
       "React",
       "Node.js",

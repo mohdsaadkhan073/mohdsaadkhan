@@ -41,32 +41,283 @@
   {
     "title": "Haji Cloth Store",
     "slug": "haji-cloth-store",
-    "shortDescription": "Live e-commerce website developed for a clothing business.",
-    "longDescription": "A fully functional e-commerce platform developed for Haji Cloth Store. Built for scale and performance, it features a modern frontend interface, seamless checkout flows, dynamic product filtering, and an optimized mobile experience. The architecture ensures high availability and fast load times.",
+    "shortDescription": "A premium e-commerce platform specializing in high-quality Hajj & Umrah pilgrimage wear, luxury prayer mats, and sacred travel accessories.",
+    "longDescription": "Haji Cloth Store is a premium e-commerce platform specializing in Hajj & Umrah pilgrimage wear, luxury prayer mats (Janamaz), and sacred travel accessories. Built with a clean, luxurious, and modern Islamic aesthetic, the application leverages Next.js 15 (App Router), React 19, and Supabase. It features an interactive shopping cart drawer, rich client-side states using Zustand, robust email notifications through EmailJS, and a comprehensive administration dashboard to manage products, FAQs, and store configurations. The entire application is fully optimized for SEO, including dynamic sitemaps and structured JSON-LD schemas.",
     "features": [
-      "Inventory indexing and stock-health tracking",
-      "Admin workflows for price, category, and media control",
-      "Order lifecycle monitoring and analytics snapshots",
-      "Seamless checkout and payment gateway integration"
+      "Premium E-Commerce Interface with curated collections (Ahram sets, Janamaz, accessories)",
+      "Interactive Shopping Cart with sidebar drawer and persistent client-side states",
+      "Robust Search Engine Optimization (SEO) including dynamic sitemap compilations (/sitemap.xml) and robots.txt",
+      "Structured Schema (JSON-LD) markup including dynamic FAQPage rich snippets to maximize search rankings",
+      "Secure Contact Form with client-side validation and direct dispatch via EmailJS REST API",
+      "Dynamic notifications using a custom toast system for real-time form submission feedback",
+      "Dynamic Administration Panel for product management, dynamic FAQ editing/reordering, and store configuration controls",
+      "Fluid user interface with smooth transitions and hover states powered by Framer Motion"
     ],
     "category": [
       "Web",
+      "E-Commerce",
       "Full Stack",
-      "Business"
+      "Business",
+      "Next.js"
     ],
     "priority": "high",
     "featured": true,
     "previewType": "video",
-    "preview": "/videos/Haji Cloth Store.mp4",
+    "preview": "/videos/Haji Cloth Store (1).mp4",
     "github": "",
-    "live": "https://hajiclothstore.com",
+    "live": "https://haji-cloth-store.vercel.app",
+    "readme": "",
+    "technologies": [
+      "Next.js",
+      "React",
+      "TypeScript",
+      "Tailwind CSS",
+      "Supabase",
+      "Zustand",
+      "Framer Motion",
+      "EmailJS",
+      "Radix UI"
+    ]
+  },
+  {
+    "title": "Baba Misal",
+    "slug": "baba-misal",
+    "shortDescription": "A premium Maharashtrian restaurant management platform featuring tableside QR ordering, real-time POS, and an admin analytics dashboard.",
+    "longDescription": "Baba Misal is a premium restaurant management and digital ordering system built using React and Vite. Designed as a high-end frontend demonstration, it brings the traditional food flavors of Maharashtra into a modern digital experience. The platform features tableside QR code ordering, a real-time Point of Sale (POS) counter interface, and a robust Admin Dashboard Terminal. Restaurant owners can manage dish catalogs (CRUD operations), track active order lifecycles (Pending, Preparing, Completed, Cancelled), view customer reviews, and analyze earnings through interactive stats. The architecture is engineered with a modular state-event bridge using LocalStorage, structured to support future Supabase integration.",
+    "features": [
+      "Interactive Tableside QR Ordering allowing self-checkout and token generation",
+      "Real-time Point of Sale (POS) counter interface for cashier-driven orders",
+      "Robust Admin Dashboard Terminal to manage dish menus, order status lifecycles, and customer feedback",
+      "State-Event Bridge database architecture mimicking Supabase models using persistent storage",
+      "Comprehensive order tracking pipeline (Pending, Preparing, Completed, Cancelled)",
+      "Dynamic client-side routing and page transitions for a seamless user experience",
+      "Interactive sales stats, discount calculations, and invoice summaries",
+      "Modern, immersive Maharashtrian restaurant branding with responsive layouts for mobile and desktop"
+    ],
+    "category": [
+      "Web",
+      "Full Stack",
+      "Business",
+      "Restaurant Systems",
+      "React"
+    ],
+    "priority": "high",
+    "featured": true,
+    "previewType": "video",
+    "preview": "/videos/Baba Misal.mp4",
+    "github": "https://github.com/mohdsaadkhan073/Baba-Misal.git",
+    "live": "https://baba-misal.vercel.app",
+    "readme": "/readmes/Baba Misal.md",
+    "technologies": [
+      "React",
+      "Vite",
+      "JavaScript",
+      "Vanilla CSS",
+      "Lucide React",
+      "LocalStorage",
+      "Vercel"
+    ]
+  },
+  {
+    "title": "Central Thrifts",
+    "slug": "central-thrifts",
+    "shortDescription": "A Gen-Z focused streetwear and thrift catalog with immersive 3D jersey interactions, WhatsApp checkout, and passwordless authentication.",
+    "longDescription": "Central Thrifts is a premium, high-performance streetwear catalog and inquiry store built for the Gen-Z culture. Powered by Next.js 16 (App Router), React 19, and Tailwind CSS v4, the application features an immersive frontpage complete with background videos, interactive magnetic CTA buttons, an animated custom cursor, and a dynamic 3D jersey model rendered using Three.js and React Three Fiber. Users can browse curated products with instant client-side filtering, add items to a sliding cart drawer, and complete checkout through a custom, URL-encoded WhatsApp inquiry message dispatched in under 10 seconds. The platform is backed by Supabase for PostgreSQL database schemas and passwordless Email OTP / Google OAuth authentication, featuring a local storage fallback mode for development.",
+    "features": [
+      "Immersive 3D Jersey Interaction using Three.js, React Three Fiber, and Drei",
+      "Instant WhatsApp Checkout with a URL-encoded catalog details generator",
+      "Passwordless Email OTP Authentication (numeric verification codes with no password fields)",
+      "Google OAuth Sign-In Integration for seamless user onboarding",
+      "Interactive Admin Dashboard featuring live inventory analytics and product CRUD controls",
+      "Integrated Customer Manager to search, filter, and export user profiles and roles",
+      "Stunning visual aesthetics with full-screen background video, magnetic buttons, and GSAP/Framer Motion animations",
+      "Profile Completion Guard ensuring first-time users fill out contact details upon registration",
+      "Complete Supabase schema integration with PostgreSQL database triggers and automated LocalStorage fallback"
+    ],
+    "category": [
+      "Web",
+      "E-Commerce",
+      "Full Stack",
+      "Three.js",
+      "Next.js"
+    ],
+    "priority": "high",
+    "featured": true,
+    "previewType": "video",
+    "preview": "/videos/Central Thrifts.mp4",
+    "github": "https://github.com/mohdsaadkhan073/Central-Thrifts.git",
+    "live": "https://central-thrifts.vercel.app",
+    "readme": "/readmes/Central Thrifts.md",
+    "technologies": [
+      "Next.js",
+      "React",
+      "Three.js",
+      "React Three Fiber",
+      "Tailwind CSS",
+      "Supabase",
+      "GSAP",
+      "Framer Motion",
+      "TypeScript"
+    ]
+  },
+  {
+    "title": "Nexoresha Media Works",
+    "slug": "nexoresha-media-works",
+    "shortDescription": "A premium cinematic social media and branding agency portal featuring scroll-scrubbed hero frames, a luxury pricing configurator, and built-in transaction emulation.",
+    "longDescription": "Nexoresha Media Works is a premium, high-fidelity cinematic branding and media production agency website. Built using Next.js 16 (App Router), React 19, and Tailwind CSS v4, it showcases a luxurious visual aesthetic styled with cream-beige, deep maroon, and blood-red tones. The hero section features an interactive scroll-scrubbed video sequence preloading 240 high-resolution static frames, rendered via frame-interpolation algorithms for seamless scroll matching. The app integrates double-row infinite marquee tickers, an autoplay-on-hover cinematic showreel portfolio masonry grid, and a custom cart builder. Clients can configure personalized media services (Content, Production, Marketing) and checkout securely using Razorpay and EmailJS contact forms. Developers can test transaction status and workflow logic via an built-in interactive payment sandbox environment.",
+    "features": [
+      "Scroll-Scrubbed Video Sequence preloading 240 high-resolution frames with linear scroll interpolation",
+      "Interactive package builder allowing clients to mix-and-match Content, Production, and Marketing line items",
+      "Dynamic slide-out Cart Drawer displaying subtotals, GST (18%), custom discount codes, and order parameters",
+      "Built-in Payment Sandbox Emulator to simulate transactions without live Razorpay keys",
+      "Cinematic Portfolio Masonry Grid autoplaying muted showreels on card hover",
+      "Refined double-row infinite marquee tickers scrolling in opposite directions with scale-hover states",
+      "EmailJS lead generation form with budget sliders, service selection lists, and interactive confetti feedback",
+      "Flexible local simulated database fallback using local JSON files when MongoDB is offline"
+    ],
+    "category": [
+      "Web",
+      "E-Commerce",
+      "Full Stack",
+      "Branding",
+      "Next.js"
+    ],
+    "priority": "high",
+    "featured": true,
+    "previewType": "video",
+    "preview": "/videos/Nexoresha Media Works.mp4",
+    "github": "",
+    "live": "https://nexoresha-media-works.vercel.app",
+    "readme": "",
+    "technologies": [
+      "Next.js",
+      "React",
+      "Tailwind CSS",
+      "TypeScript",
+      "Zustand",
+      "MongoDB",
+      "Razorpay",
+      "EmailJS",
+      "Framer Motion"
+    ]
+  },
+  {
+    "title": "Nexoresha Tales",
+    "slug": "nexoresha-tales",
+    "shortDescription": "A luxury wedding cinematography and fine-art photography portal featuring a 3D camera explosion scroller, infinite package slider, and cinematic video player.",
+    "longDescription": "Nexoresha Tales is an elite, high-end wedding cinematography and fine-art photography portfolio website. Built using Next.js 14, React 18, and Tailwind CSS, it features a luxurious, deep crimson and gold visual theme. The landing page showcases a high-fidelity 3D RED-style cinema camera rig constructed in React Three Fiber that disassembles dynamically into its core components (an 'explosion' animation) matching the user's scroll depth. The portal includes a compressed Our Services section with hover transitions, an infinite center-snapping pricing package slider with left/right card peaking, a glassmorphic team portrait display, and a dedicated Films streaming page. The Films page acts as an Apple TV-inspired catalog with runtime badges, keyword search, hover-triggered video previews, and a fullscreen video player.",
+    "features": [
+      "Scroll-Driven 3D Camera Explosion effect disassembling a modular RED-style cinema camera rig on scroll",
+      "Interactive pricing package slider featuring infinite snapping loops and left/right card peaking",
+      "Cinematic Films route with muted autoplay previews on card hover and a fullscreen video player modal",
+      "Apple TV-inspired landing banner for featured cinema with custom narration and runtime tags",
+      "Glassmorphic Team Section housing grayscale portraits that transition to realistic colors on hover",
+      "Luxury Customer Reviews section with custom vector stars and serif backdrop quotes",
+      "Robust validation inquiry forms with EmailJS integration for direct customer email delivery",
+      "Static Export architecture configured for high-performance hosting and instant page load speeds"
+    ],
+    "category": [
+      "Web",
+      "Creative Coding",
+      "3D",
+      "Next.js",
+      "Portfolio"
+    ],
+    "priority": "high",
+    "featured": true,
+    "previewType": "video",
+    "preview": "/videos/Nexoresha Tales.mp4",
+    "github": "",
+    "live": "https://nexoresha-tales.vercel.app",
+    "readme": "",
+    "technologies": [
+      "Next.js",
+      "React",
+      "Three.js",
+      "React Three Fiber",
+      "Tailwind CSS",
+      "Framer Motion",
+      "EmailJS",
+      "TypeScript"
+    ]
+  },
+  {
+    "title": "Nexoresha Seran",
+    "slug": "nexoresha-seran",
+    "shortDescription": "A luxury haute perfumery e-commerce store with granular scent notes filtering, interactive cart drawers, and a massive admin control console.",
+    "longDescription": "Nexoresha Seran is a premium haute perfumery e-commerce store specializing in luxury French fragrances, Oud blends, and bespoke olfactory creations. Powered by React 19, TypeScript, and Vite, the platform features a stunning dark-gold luxury aesthetic with video backgrounds, card-preloading, and fluid Framer Motion animations. The store implements client-side multi-layered sorting and filtering (filtering by category, scent notes, flacon sizes, and price sliders), an interactive shopping bag, and a direct Supabase-integrated order checkout flow. The application includes a massive, fully-equipped Admin Dashboard Console (managing inventory, orders, collections, announcements, user reviews, and editorial settings) alongside a Row-Level-Security (RLS) PostgreSQL database schema.",
+    "features": [
+      "Artisanal Scent Filters allowing users to search and isolate perfumes by categories, notes, bottle sizes, and prices",
+      "Ultra-comprehensive Admin Control Console managing products, order statuses, announcements, and homepage copy",
+      "Row Level Security (RLS) PostgreSQL Schema with defined select policies and authenticated admin overrides",
+      "Dynamic Reviews & Testimonials portal supporting admin approval queueing and homepage review pinning",
+      "State-Event React Context architecture mapped directly to Supabase client clients with local fallback storage",
+      "Stunning visual aesthetics with video integrations, custom linen-box packaging references, and luxury typography",
+      "Automated inventory low-stock flag tracking and order lifecycle statuses (Pending, Dispatched, Delivered, Cancelled)",
+      "Interactive custom dropdown select menus and real-time CountUp counters for analytics"
+    ],
+    "category": [
+      "Web",
+      "E-Commerce",
+      "Full Stack",
+      "Luxury",
+      "React"
+    ],
+    "priority": "high",
+    "featured": true,
+    "previewType": "video",
+    "preview": "/videos/Nexoresha Seran.mp4",
+    "github": "",
+    "live": "https://nexoresha-seran.vercel.app",
     "readme": "",
     "technologies": [
       "React",
-      "Node.js",
+      "TypeScript",
+      "Vite",
       "Tailwind CSS",
-      "SQL",
-      "Docker"
+      "Supabase",
+      "Framer Motion",
+      "Lucide React",
+      "PostgreSQL"
+    ]
+  },
+  {
+    "title": "Wander",
+    "slug": "wander-travel",
+    "shortDescription": "An interactive travel planning dashboard and companion app that matches wanderer personalities and constructs custom flight itineraries.",
+    "longDescription": "Wander is a premium travel companion and itinerary planner built with Next.js 16 (App Router), React 19, and Tailwind CSS v4. The platform features an interactive traveler personality assessment quiz that categorizes users (into profiles like The Explorer, The Foodie, or The Nature Lover). Based on selected landscapes, travel styles, and activities, Wander dynamically compiles custom country itineraries, weather indexes, best season advice, fun facts, budget breakdowns, and real-time flight search options. The app is optimized for high-performance with custom loading indicators, dynamic transitions, and Lucide React visuals, presenting an immersive digital experience.",
+    "features": [
+      "Interactive Traveler Personality Quiz tracking landscaping styles, budgets, and perfect travel moments",
+      "Dynamic Itinerary Generation compiling country stats, fun facts, and day-by-day activity outlines",
+      "Comprehensive Budget Breakdown categorizing expenses across flights, accommodation, dining, and shopping",
+      "Integrated Flight Search displaying demo flights, schedules, runtimes, and airline prices",
+      "Interactive packing checklists allowing travelers to tick items off before departures",
+      "Premium responsive layouts with video integration and fluid Framer Motion slide-in card animations",
+      "AI WanderBot chat assistant simulation built to answer travel FAQs and customize plans",
+      "SEO-friendly configuration using Next.js App Router metadata structures"
+    ],
+    "category": [
+      "Web",
+      "Product",
+      "Travel",
+      "Interactive",
+      "Next.js"
+    ],
+    "priority": "high",
+    "featured": true,
+    "previewType": "video",
+    "preview": "/videos/Wander.mp4",
+    "github": "https://github.com/mohdsaadkhan073/wander-travel.git",
+    "live": "https://wander-travel.vercel.app",
+    "readme": "",
+    "technologies": [
+      "Next.js",
+      "React",
+      "Tailwind CSS",
+      "TypeScript",
+      "Lucide React",
+      "Framer Motion",
+      "Vercel"
     ]
   },
   {

@@ -1,44 +1,5 @@
 [
   {
-    "title": "Jarvis Desktop Assistant",
-    "slug": "jarvis-desktop-assistant",
-    "shortDescription": "Voice-controlled Windows automation assistant that opens apps, answers commands, and supports local AI responses.",
-    "longDescription": "A Python-based desktop assistant designed for Windows automation. It listens for wake words, captures speech through SpeechRecognition, converts responses to voice with pyttsx3, and uses keyboard/system automation to launch applications and handle basic desktop actions. The assistant also connects to a local LLM workflow through Ollama for AI-style replies, making it a lightweight voice-first productivity tool.",
-    "features": [
-      "Wake-word based voice interaction",
-      "Speech-to-text command recognition",
-      "Text-to-speech voice feedback",
-      "Application launch automation",
-      "Local AI response generation",
-      "Keyboard-driven desktop control",
-      "Stop-speech hotkey support",
-      "Windows-focused productivity workflow"
-    ],
-    "category": [
-      "AI",
-      "Automation",
-      "Tools"
-    ],
-    "priority": "high",
-    "featured": true,
-    "previewType": "image",
-    "preview": "",
-    "github": "https://github.com/mohdsaadkhan073",
-    "live": "",
-    "readme": "/readmes/JARVIS-DESKTOP-ASSISTANT.md",
-    "technologies": [
-      "Python",
-      "SpeechRecognition",
-      "pyttsx3",
-      "keyboard",
-      "subprocess",
-      "Ollama / Llama3",
-      "PyAudio",
-      "NLP",
-      "Automation"
-    ]
-  },
-  {
     "title": "Haji Cloth Store",
     "slug": "haji-cloth-store",
     "shortDescription": "A premium e-commerce platform specializing in high-quality Hajj & Umrah pilgrimage wear, luxury prayer mats, and sacred travel accessories.",
@@ -106,7 +67,7 @@
     "previewType": "video",
     "preview": "/videos/Baba Misal.mp4",
     "github": "https://github.com/mohdsaadkhan073/Baba-Misal.git",
-    "live": "https://baba-misal.vercel.app",
+    "live": "https://baba-misal-blond.vercel.app",
     "readme": "/readmes/Baba Misal.md",
     "technologies": [
       "React",
@@ -306,9 +267,9 @@
     "priority": "high",
     "featured": true,
     "previewType": "video",
-    "preview": "/videos/Wander.mp4",
+    "preview": "/videos/Wander Travel.mp4",
     "github": "https://github.com/mohdsaadkhan073/wander-travel.git",
-    "live": "https://wander-travel.vercel.app",
+    "live": "",
     "readme": "",
     "technologies": [
       "Next.js",
@@ -318,6 +279,45 @@
       "Lucide React",
       "Framer Motion",
       "Vercel"
+    ]
+  },
+  {
+    "title": "Jarvis Desktop Assistant",
+    "slug": "jarvis-desktop-assistant",
+    "shortDescription": "Voice-controlled Windows automation assistant that opens apps, answers commands, and supports local AI responses.",
+    "longDescription": "A Python-based desktop assistant designed for Windows automation. It listens for wake words, captures speech through SpeechRecognition, converts responses to voice with pyttsx3, and uses keyboard/system automation to launch applications and handle basic desktop actions. The assistant also connects to a local LLM workflow through Ollama for AI-style replies, making it a lightweight voice-first productivity tool.",
+    "features": [
+      "Wake-word based voice interaction",
+      "Speech-to-text command recognition",
+      "Text-to-speech voice feedback",
+      "Application launch automation",
+      "Local AI response generation",
+      "Keyboard-driven desktop control",
+      "Stop-speech hotkey support",
+      "Windows-focused productivity workflow"
+    ],
+    "category": [
+      "AI",
+      "Automation",
+      "Tools"
+    ],
+    "priority": "high",
+    "featured": true,
+    "previewType": "image",
+    "preview": "",
+    "github": "https://github.com/mohdsaadkhan073",
+    "live": "",
+    "readme": "/readmes/JARVIS-DESKTOP-ASSISTANT.md",
+    "technologies": [
+      "Python",
+      "SpeechRecognition",
+      "pyttsx3",
+      "keyboard",
+      "subprocess",
+      "Ollama / Llama3",
+      "PyAudio",
+      "NLP",
+      "Automation"
     ]
   },
   {
@@ -357,34 +357,6 @@
     ]
   },
   {
-    "title": "Content Creation Workflow",
-    "slug": "content-creation-workflow",
-    "shortDescription": "A structured workflow for recording, managing, and publishing digital content.",
-    "longDescription": "A comprehensive system designed to streamline the entire digital content lifecycle. From initial recording to final publication, this workflow architecture integrates multiple tools into a unified pipeline, reducing friction and maximizing creative output.",
-    "features": [
-      "Automated file ingestion and metadata tagging",
-      "Video rendering pipeline integration",
-      "Multi-platform auto-publishing scripts"
-    ],
-    "category": [
-      "Automation",
-      "Tools",
-      "Systems"
-    ],
-    "priority": "medium",
-    "featured": true,
-    "previewType": "image",
-    "preview": "",
-    "github": "https://github.com/mohdsaadkhan073",
-    "live": "",
-    "readme": "/readmes/dummy.md",
-    "technologies": [
-      "Workflow",
-      "System Design",
-      "Automation"
-    ]
-  },
-  {
     "title": "Career Buddy Platform",
     "slug": "career-buddy",
     "shortDescription": "An evolving career guidance product that helps users discover career paths, skills, colleges, and jobs.",
@@ -417,30 +389,31 @@
     ]
   },
   {
-    "title": "Quantum Algorithm Simulator",
-    "slug": "quantum-algo-simulator",
-    "shortDescription": "Experimental simulator for quantum algorithms and logic gates.",
-    "longDescription": "An experimental project focused on visualizing and simulating fundamental quantum computing algorithms. It provides a visual interface for constructing quantum circuits and observing state vectors in real-time.",
+    "title": "Content Creation Workflow",
+    "slug": "content-creation-workflow",
+    "shortDescription": "A structured workflow for recording, managing, and publishing digital content.",
+    "longDescription": "A comprehensive system designed to streamline the entire digital content lifecycle. From initial recording to final publication, this workflow architecture integrates multiple tools into a unified pipeline, reducing friction and maximizing creative output.",
     "features": [
-      "Visual interface for constructing quantum circuits",
-      "Real-time state vector observation",
-      "Simulation of fundamental quantum algorithms"
+      "Automated file ingestion and metadata tagging",
+      "Video rendering pipeline integration",
+      "Multi-platform auto-publishing scripts"
     ],
     "category": [
-      "Experiments",
+      "Automation",
+      "Tools",
       "Systems"
     ],
-    "priority": "low",
+    "priority": "medium",
     "featured": true,
     "previewType": "image",
     "preview": "",
-    "github": "",
+    "github": "https://github.com/mohdsaadkhan073",
     "live": "",
     "readme": "/readmes/dummy.md",
     "technologies": [
-      "Python",
-      "Simulation",
-      "Mathematics"
+      "Workflow",
+      "System Design",
+      "Automation"
     ]
   }
 ]

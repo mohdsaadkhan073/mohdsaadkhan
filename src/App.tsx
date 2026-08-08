@@ -11,6 +11,10 @@ import { useEffect } from "react";
 
 const queryClient = new QueryClient();
 
+const getBasename = () => {
+  return window.location.pathname.startsWith("/initial") ? "/initial" : "/";
+};
+
 const App = () => {
   useEffect(() => {
     const loadWidget = () => {
@@ -40,7 +44,7 @@ const App = () => {
       <TooltipProvider>
         <Toaster />
         <Sonner />
-        <BrowserRouter basename="/initial">
+        <BrowserRouter basename={getBasename()}>
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/projects" element={<ProjectsPage />} />
